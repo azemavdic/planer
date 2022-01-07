@@ -6,9 +6,9 @@ const SidebarMeni = ({ meni }) => {
   const router = useRouter()
 
   let className =
-    'flex items-center cursor-pointer space-x-4  hover:bg-slate-600 px-3 py-2 rounded'
+    'flex items-center cursor-pointer space-x-4  hover:bg-slate-600 px-3 py-2 hover:rounded'
   if (router.pathname === path) {
-    className += ' border-l-8 border-slate-400'
+    className += ' border-b-8 border-r-8 rounded-full -mr-2 border-slate-400'
   }
 
   return (

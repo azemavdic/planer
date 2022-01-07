@@ -15,6 +15,8 @@ const Navbar = () => {
             ? 'Posao'
             : router.pathname === '/kuca'
             ? 'Kuća'
+            : router.pathname === '/racuni'
+            ? 'Računi'
             : 'Početna'}
         </span>
       </div>

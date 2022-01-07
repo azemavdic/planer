@@ -1,5 +1,5 @@
 import { BsFillHouseFill } from 'react-icons/bs'
-import { RiParentFill } from 'react-icons/ri'
+import { RiParentFill, RiBillFill } from 'react-icons/ri'
 import { MdWork } from 'react-icons/md'
 import SidebarMeni from './SidebarMeni'
 import Link from 'next/link'
@@ -20,6 +20,11 @@ const sidebarMeni = [
     Ikona: MdWork,
     path: '/posao',
   },
+  {
+    naziv: 'Računi',
+    Ikona: RiBillFill,
+    path: '/racuni',
+  },
 ]
 
 const Sidebar = () => {
@@ -28,7 +33,7 @@ const Sidebar = () => {
       <Link href='/' passHref>
         <h1 className='text-3xl font-bold p-6 cursor-pointer'>Planer</h1>
       </Link>
-      <ul>
+      <ul className='mt-10'>
         {sidebarMeni.map((meni) => (
           <SidebarMeni key={meni.naziv} meni={meni} />
         ))}
