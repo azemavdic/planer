@@ -1,6 +1,6 @@
-import FormaRacun from '../components/FormaRacun'
-import RacunCard from '../components/RacunCard'
-import TabelaRačuna from '../components/TabelaRačuna'
+import FormaRacun from '../components/racun/FormaRacun'
+import RacunCard from '../components/racun/RacunCard'
+import TabelaRačuna from '../components/racun/TabelaRačuna'
 import { useSelector } from 'react-redux'
 
 const Racuni = () => {
@@ -13,10 +13,6 @@ const Racuni = () => {
       <div className='col-span-12 lg:col-span-8'>
         <h3 className='text-xl font-bold'>Pregled računa</h3>
         <TabelaRačuna />
-        {/* <div className='grid grid-cols-12'> */}
-        {/* {racuni &&
-            racuni.map((racun, i) => <RacunCard key={i} racun={racun} />)} */}
-        {/* </div> */}
       </div>
     </div>
   )

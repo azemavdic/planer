@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux'
-import { izbrisiRacun } from '../redux/racunSlice'
+import { izbrisiRacun } from '../../redux/racunSlice'
 import { TiDocumentDelete } from 'react-icons/ti'
 
 const RacunCard = ({ racun }) => {

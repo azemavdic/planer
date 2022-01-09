@@ -2,12 +2,12 @@ import { useSelector } from 'react-redux'
 import TrosakItem from './TrosakItem'
 
 const TabelaRačuna = () => {
-  const struja = useSelector((state) => state.struja)
-  const voda = useSelector((state) => state.voda)
-  const smece = useSelector((state) => state.smece)
-  const kablovska = useSelector((state) => state.kablovska)
-  const mobitel = useSelector((state) => state.mobitel)
-  const iptv = useSelector((state) => state.iptv)
+  const struja = useSelector((state) => state.racunReducer.struja)
+  const voda = useSelector((state) => state.racunReducer.voda)
+  const smece = useSelector((state) => state.racunReducer.smece)
+  const kablovska = useSelector((state) => state.racunReducer.kablovska)
+  const mobitel = useSelector((state) => state.racunReducer.mobitel)
+  const iptv = useSelector((state) => state.racunReducer.iptv)
 
   const strujaUkupno = struja.reduce(
     (prev, curr) => prev + Number(curr.iznos),

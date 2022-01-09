@@ -7,7 +7,7 @@ import {
   dodajRacunSmece,
   dodajRacunStruja,
   dodajRacunVoda,
-} from '../redux/racunSlice'
+} from '../../redux/racunSlice'
 import { v4 as uuidv4 } from 'uuid'
 
 const FormaRacun = () => {
