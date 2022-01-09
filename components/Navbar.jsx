@@ -6,7 +6,7 @@ const Navbar = () => {
   const router = useRouter()
 
   return (
-    <div className='navbar mb-2 shadow-lg bg-neutral text-neutral-content rounded-box'>
+    <div className='mb-2 shadow-lg navbar bg-neutral text-neutral-content rounded-box'>
       <div className='flex-1 hidden px-2 mx-2 lg:flex'>
         <span className='text-lg font-bold'>
           {router.pathname === '/mama'
@@ -20,7 +20,7 @@ const Navbar = () => {
             : 'Početna'}
         </span>
       </div>
-      <div className='flex-grow w-full justify-center'>
+      <div className='justify-center flex-grow w-full'>
         <div className='form-control lg:w-4/5'>
           <input
             type='text'
@@ -31,8 +31,8 @@ const Navbar = () => {
       </div>
       <div className='flex-none'>
         <div className='avatar'>
-          <div className='rounded-full w-10 h-10 m-1'>
-            <img src='https://i.pravatar.cc/500?img=32' />
+          <div className='w-10 h-10 m-1 rounded-full'>
+            <img src='https://i.pravatar.cc/500' />
           </div>
         </div>
       </div>

@@ -1,4 +1,8 @@
+import { useSelector } from 'react-redux'
+
 const TabelaRačuna = () => {
+  const racuni = useSelector((state) => state.racun)
+
   return (
     <div className='overflow-x-auto mt-4 overflow-y-visible h-[30rem]'>
       <table className='table w-full table-zebra'>
@@ -14,24 +18,14 @@ const TabelaRačuna = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th>1</th>
-            <td>100</td>
-            <td>40</td>
-            <td>70</td>
-            <td>120</td>
-            <td>20</td>
-            <td>10</td>
-          </tr>
-          <tr>
-            <th>2</th>
-            <td>100</td>
-            <td>40</td>
-            <td>70</td>
-            <td>120</td>
-            <td>20</td>
-            <td>10</td>
-          </tr>
+          {racuni.map((racun, index) => {
+            return (
+              <tr key={index}>
+                <td>{racun.mjesec}</td>
+                {/* <td>{racun.}</td> */}
+              </tr>
+            )
+          })}
         </tbody>
         <tfoot>
           <tr>
