@@ -1,6 +1,13 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { dodajRacun } from '../redux/racunSlice'
+import {
+  dodajRacunIptv,
+  dodajRacunKablovska,
+  dodajRacunMobitel,
+  dodajRacunSmece,
+  dodajRacunStruja,
+  dodajRacunVoda,
+} from '../redux/racunSlice'
 import { v4 as uuidv4 } from 'uuid'
 
 const FormaRacun = () => {
@@ -45,7 +52,28 @@ const FormaRacun = () => {
       return
     }
 
-    dispatch(dodajRacun({ ...formData, _id: uuidv4() }))
+    switch (formData.trosak) {
+      case 'struja':
+        dispatch(dodajRacunStruja({ ...formData, _id: uuidv4() }))
+        break
+      case 'voda':
+        dispatch(dodajRacunVoda({ ...formData, _id: uuidv4() }))
+        break
+      case 'kablovska':
+        dispatch(dodajRacunKablovska({ ...formData, _id: uuidv4() }))
+        break
+      case 'mobitel':
+        dispatch(dodajRacunMobitel({ ...formData, _id: uuidv4() }))
+        break
+      case 'smece':
+        dispatch(dodajRacunSmece({ ...formData, _id: uuidv4() }))
+        break
+      case 'iptv':
+        dispatch(dodajRacunIptv({ ...formData, _id: uuidv4() }))
+        break
+      default:
+        break
+    }
   }
   return (
     <div className='w-full max-w-xs'>
