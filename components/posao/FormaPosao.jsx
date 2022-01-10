@@ -1,13 +1,19 @@
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { v4 as uuidv4 } from 'uuid'
+import { dodajAktivnost } from '../../redux/posaoSlice'
+import dayjs from 'dayjs'
 
 const FormaRacun = () => {
+  const datum = dayjs(new Date().toLocaleString(), 'DD.MM.YYYY')
   const [formData, setFormData] = useState({
     naziv: '',
     opis: '',
     zavrsen: false,
-    datum: new Date(),
+    datum: datum,
   })
+
+  const dispatch = useDispatch()
 
   const [greska, setGreska] = useState(null)
 
@@ -30,7 +36,7 @@ const FormaRacun = () => {
       }, 3000)
       return
     }
-    console.log(formData)
+    dispatch(dodajAktivnost({ ...formData, _id: uuidv4() }))
   }
   return (
     <div className='w-full max-w-xs'>
