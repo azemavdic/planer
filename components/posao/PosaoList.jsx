@@ -1,6 +1,7 @@
 import { TiDocumentDelete } from 'react-icons/ti';
+import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { izbrisiAktivnost } from '../../redux/posaoSlice';
+import { izbrisiAktivnost, izmijeniZavrsen } from '../../redux/posaoSlice';
 
 const PosaoList = ({ posao, rb }) => {
     let zavrsenClassName =
@@ -10,12 +11,29 @@ const PosaoList = ({ posao, rb }) => {
     } else {
         zavrsenClassName += ' border-red-400';
     }
-
+    const posaoStore = useSelector((state) => state.posaoReducer.posao);
     const dispatch = useDispatch();
+    console.log(posaoStore);
+
+    const toggleZavrsen = (id) => {
+        const dene = posaoStore.map((posao) => {
+            if (posao._id === id) {
+                return {
+                    ...posao,
+                    zavrsen: !posao.zavrsen,
+                };
+            }
+            return posao;
+        });
+        dispatch(izmijeniZavrsen(dene));
+    };
 
     return (
         <>
-            <div className={zavrsenClassName}>
+            <div
+                className={zavrsenClassName}
+                onDoubleClick={() => toggleZavrsen(posao._id)}
+            >
                 <p className='p-2'>{rb}</p>
                 <div>
                     <p className='font-bold'>{posao.naziv}</p>

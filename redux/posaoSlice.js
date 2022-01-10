@@ -14,8 +14,12 @@ export const posaoSlice = createSlice({
                 (posao) => posao._id !== action.payload
             );
         },
+        izmijeniZavrsen: (state, action) => {
+            state.posao = action.payload;
+        },
     },
 });
 
-export const { dodajAktivnost, izbrisiAktivnost } = posaoSlice.actions;
+export const { dodajAktivnost, izbrisiAktivnost, izmijeniZavrsen } =
+    posaoSlice.actions;
 export default posaoSlice.reducer;
