@@ -33,7 +33,6 @@ const Posao = () => {
                                 posao={posao}
                                 rb={rb++}
                             />
-                            ))}
                         </div>
                     )}
                 </div>
