@@ -1,17 +1,16 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
-import { dodajAktivnost } from '../../redux/posaoSlice';
-import dayjs from 'dayjs';
+import { dodajPosao } from '../../redux/apiPosao';
 
 const FormaRacun = () => {
-    const datum = dayjs(new Date().toLocaleString(), 'DD.MM.YYYY');
     const [formData, setFormData] = useState({
         naziv: '',
         opis: '',
         zavrsen: false,
-        datum: datum,
     });
+
+    const pending = useSelector((state) => state.posao.pending);
 
     const dispatch = useDispatch();
 
@@ -37,7 +36,7 @@ const FormaRacun = () => {
             return;
         }
         setFormData({ naziv: '', opis: '' });
-        dispatch(dodajAktivnost({ ...formData, _id: uuidv4() }));
+        dodajPosao(formData, dispatch);
     };
     return (
         <div className='w-full max-w-xs'>
@@ -93,7 +92,12 @@ const FormaRacun = () => {
                         className='w-5 h-5'
                     />
                 </div>
-                <button className='btn btn-wide'>Potvrdi</button>
+                <button
+                    disabled={pending}
+                    className='btn btn-wide disabled:bg-gray-200'
+                >
+                    Potvrdi
+                </button>
                 {greska && (
                     <p className='mt-2 text-center text-red-500'>{greska}</p>
                 )}

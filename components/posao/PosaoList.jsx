@@ -5,15 +5,15 @@ import { izbrisiAktivnost, izmijeniZavrsen } from '../../redux/posaoSlice';
 
 const PosaoList = ({ posao, rb }) => {
     let zavrsenClassName =
-        'flex border-l-8 items-center gap-10  rounded-lg relative';
+        'flex border-l-8 items-center gap-10 rounded-lg relative';
     if (posao.zavrsen) {
         zavrsenClassName += ' border-green-400';
     } else {
         zavrsenClassName += ' border-red-400';
     }
-    const posaoStore = useSelector((state) => state.posaoReducer.posao);
+    const posaoStore = useSelector((state) => state.posao.posao);
     const dispatch = useDispatch();
-    console.log(posaoStore);
+    console.log(posao);
 
     const toggleZavrsen = (id) => {
         const dene = posaoStore.map((posao) => {
