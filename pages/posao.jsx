@@ -1,11 +1,11 @@
 import { useSelector } from 'react-redux';
 import FormaPosao from '../components/posao/FormaPosao';
 import PosaoList from '../components/posao/PosaoList';
-import { getAllPosao } from '../redux/posaoSlice';
+import { useGetAllPosaoQuery } from '../redux/apiQuery';
 const Posao = () => {
-    const posao = useSelector((state) => state.posao.posao);
     let rb = 1;
-    console.log(getAllPosao);
+
+    const { data, isError, isLoading } = useGetAllPosaoQuery();
 
     return (
         <>
@@ -24,15 +24,17 @@ const Posao = () => {
                 </div>
                 <div className='col-span-12 lg:col-span-8'>
                     <h3 className='text-xl font-bold'>Pregled aktivnosti</h3>
-                    {posao.length === 0 ? (
+                    {data && data.posao.length === 0 ? (
                         <p>Nema aktivnosti za prikazati.</p>
                     ) : (
                         <div className='p-4 w-full overflow-y-visible overflow-x-auto bg-white shadow-lg h-[25rem] mt-4 rounded-lg'>
-                            <PosaoList
-                                key={posao._id}
-                                posao={posao}
-                                rb={rb++}
-                            />
+                            {data?.posao.map((posao) => (
+                                <PosaoList
+                                    key={posao._id}
+                                    posao={posao}
+                                    rb={rb++}
+                                />
+                            ))}
                         </div>
                     )}
                 </div>

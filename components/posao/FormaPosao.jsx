@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { dodajPosao } from '../../redux/apiPosao';
+import { useAddPosaoMutation } from '../../redux/apiQuery';
 
 const FormaRacun = () => {
     const [formData, setFormData] = useState({
@@ -10,11 +10,11 @@ const FormaRacun = () => {
         zavrsen: false,
     });
 
-    const pending = useSelector((state) => state.posao.pending);
-
     const dispatch = useDispatch();
 
     const [greska, setGreska] = useState(null);
+
+    const [dodajPosao, isLoading] = useAddPosaoMutation();
 
     const handleChange = (e) => {
         const name = e.target.name;
@@ -36,7 +36,8 @@ const FormaRacun = () => {
             return;
         }
         setFormData({ naziv: '', opis: '' });
-        dodajPosao(formData, dispatch);
+        // dodajPosao(formData, dispatch);
+        dodajPosao(formData).unwrap();
     };
     return (
         <div className='w-full max-w-xs'>
@@ -93,7 +94,7 @@ const FormaRacun = () => {
                     />
                 </div>
                 <button
-                    disabled={pending}
+                    disabled={!isLoading}
                     className='btn btn-wide disabled:bg-gray-200'
                 >
                     Potvrdi
