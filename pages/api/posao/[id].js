@@ -15,7 +15,11 @@ export default async function (req, res) {
             break;
         case 'DELETE':
             try {
-                await Posao.findByIdAndDelete({ _id: id });
+                const deletedPosao = await Posao.deleteOne({ _id: id });
+                if (!deletedPosao) {
+                    res.status(400).json({ uspjesno: false });
+                }
+                res.status(200).json({ uspjesno: true, posao });
             } catch (error) {
                 res.status(400).json({ uspjesno: false });
             }
