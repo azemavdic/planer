@@ -1,12 +1,12 @@
 import { TiDocumentDelete } from 'react-icons/ti'
-import { useDispatch } from 'react-redux'
 import {
   useGetAllPosaoQuery,
   useIzbrisiPosaoMutation,
   useToggleZavrsenMutation,
 } from '../../redux/apiQuery'
-import { izmijeniZavrsen } from '../../redux/posaoSlice'
 import dayjs from 'dayjs'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 const PosaoList = ({ posao, rb, id }) => {
   const datum = dayjs(posao?.createdAt).format('DD.MM.YYYY')
@@ -35,9 +35,24 @@ const PosaoList = ({ posao, rb, id }) => {
     await izmijeniZavrsen({ id, zavrsen: !posaoToggle?.zavrsen })
   }
 
-  const handleDeletePosao = (id) => {
-    izbrisiPosao({ id }).unwrap()
-    refetch()
+  const handleDeletePosao = async (id) => {
+    const MySwal = withReactContent(Swal)
+    const confirm = await MySwal.fire({
+      title: 'Jeste li sigurni?',
+      text: 'Želite obrisati izvoz?',
+      icon: 'warning',
+      showDenyButton: true,
+      confirmButtonText: 'Da',
+      denyButtonText: 'Ne',
+      customClass: { htmlContainer: 'grid-row:1' },
+    })
+    if (confirm.isConfirmed) {
+      Swal.fire('Aktivnost izbrisana!', '', 'success')
+      izbrisiPosao({ id }).unwrap()
+      refetch()
+    } else {
+      Swal.fire('Aktivnost nije izbrisana', '', 'info')
+    }
   }
 
   return (
