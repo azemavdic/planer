@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { useAddPosaoMutation } from '../../redux/apiQuery';
 
@@ -9,8 +8,6 @@ const FormaRacun = () => {
         opis: '',
         zavrsen: false,
     });
-
-    const dispatch = useDispatch();
 
     const [greska, setGreska] = useState(null);
 
@@ -35,7 +32,7 @@ const FormaRacun = () => {
             }, 3000);
             return;
         }
-        setFormData({ naziv: '', opis: '' });
+        setFormData({ naziv: '', opis: '', zavrsen: null });
         // dodajPosao(formData, dispatch);
         await dodajPosao(formData).unwrap();
     };
