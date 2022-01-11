@@ -39,7 +39,7 @@ const PosaoList = ({ posao, rb, id }) => {
     const MySwal = withReactContent(Swal)
     const confirm = await MySwal.fire({
       title: 'Jeste li sigurni?',
-      text: 'Želite obrisati izvoz?',
+      text: 'Želite obrisati aktivnost?',
       icon: 'warning',
       showDenyButton: true,
       confirmButtonText: 'Da',
