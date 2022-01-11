@@ -23,7 +23,18 @@ export const api = createApi({
             }),
             invalidatesTags: [{ type: 'Posao', id: 'LIST' }],
         }),
+        izbrisiPosao: build.mutation({
+            query: ({ id }) => ({
+                url: `posao/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: [{ type: 'Posao', id: 'LIST' }],
+        }),
     }),
 });
 
-export const { useGetAllPosaoQuery, useAddPosaoMutation } = api;
+export const {
+    useGetAllPosaoQuery,
+    useAddPosaoMutation,
+    useIzbrisiPosaoMutation,
+} = api;

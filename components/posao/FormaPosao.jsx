@@ -26,7 +26,7 @@ const FormaRacun = () => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (formData.naziv === '' || formData.opis === '') {
             setGreska('Popunite sva polja');
@@ -37,7 +37,7 @@ const FormaRacun = () => {
         }
         setFormData({ naziv: '', opis: '' });
         // dodajPosao(formData, dispatch);
-        dodajPosao(formData).unwrap();
+        await dodajPosao(formData).unwrap();
     };
     return (
         <div className='w-full max-w-xs'>

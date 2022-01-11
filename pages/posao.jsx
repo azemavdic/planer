@@ -6,6 +6,7 @@ const Posao = () => {
     let rb = 1;
 
     const { data, isError, isLoading } = useGetAllPosaoQuery();
+    console.log(data);
 
     return (
         <>
@@ -31,6 +32,7 @@ const Posao = () => {
                             {data?.posao.map((posao) => (
                                 <PosaoList
                                     key={posao._id}
+                                    id={posao._id}
                                     posao={posao}
                                     rb={rb++}
                                 />

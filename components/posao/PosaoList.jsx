@@ -1,9 +1,12 @@
 import { TiDocumentDelete } from 'react-icons/ti';
 import { useDispatch } from 'react-redux';
-import { useGetAllPosaoQuery } from '../../redux/apiQuery';
+import {
+    useGetAllPosaoQuery,
+    useIzbrisiPosaoMutation,
+} from '../../redux/apiQuery';
 import { izbrisiAktivnost, izmijeniZavrsen } from '../../redux/posaoSlice';
 
-const PosaoList = ({ posao, rb }) => {
+const PosaoList = ({ posao, rb, id }) => {
     let zavrsenClassName =
         'flex border-l-8 items-center gap-10 rounded-lg relative';
     if (posao?.zavrsen) {
@@ -13,6 +16,8 @@ const PosaoList = ({ posao, rb }) => {
     }
     const dispatch = useDispatch();
     const { data } = useGetAllPosaoQuery();
+    const { refetch } = useGetAllPosaoQuery();
+    const [izbrisiPosao] = useIzbrisiPosaoMutation();
 
     const toggleZavrsen = (id) => {
         const dene = data.map((posao) => {
@@ -25,6 +30,15 @@ const PosaoList = ({ posao, rb }) => {
             return posao;
         });
         dispatch(izmijeniZavrsen(dene));
+    };
+
+    const handleDeletePosao = (id) => {
+        try {
+            izbrisiPosao({ id }).unwrap();
+            refetch();
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (
@@ -42,7 +56,7 @@ const PosaoList = ({ posao, rb }) => {
                 <TiDocumentDelete
                     className='cursor-pointer absolute top-0 text-red-500 right-2'
                     size={25}
-                    onClick={() => dispatch(izbrisiAktivnost(posao?._id))}
+                    onClick={() => handleDeletePosao(id)}
                 />
             </div>
             <div className='divider'></div>
