@@ -1,21 +1,13 @@
 import { useState } from 'react'
 import { useFocus } from '../../hooks/useFocus'
 import { useAddPosaoMutation } from '../../redux/apiQuery'
-import dynamic from 'next/dynamic'
-import 'suneditor/dist/css/suneditor.min.css' // Import Sun Editor's CSS File
-import { buttonList } from 'suneditor-react'
-
-const SunEditor = dynamic(() => import('suneditor-react'), {
-  ssr: false,
-})
 
 const FormaRacun = () => {
   const [formData, setFormData] = useState({
     naziv: '',
-    // opis: '',
+    opis: '',
     zavrsen: false,
   })
-  const [opis, setOpis] = useState('')
 
   const [inputRef, setInputFocus] = useFocus()
 
@@ -35,16 +27,16 @@ const FormaRacun = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (formData.naziv === '' || opis === '') {
+    if (formData.naziv === '' || formData.opis === '') {
       setGreska('Popunite sva polja')
       setTimeout(() => {
         setGreska(false)
       }, 3000)
       return
     }
-    setFormData({ naziv: '', zavrsen: false })
+    setFormData({ naziv: '', opis: '', zavrsen: false })
     // dodajPosao(formData, dispatch);
-    await dodajPosao({ ...formData, opis }).unwrap()
+    await dodajPosao(formData).unwrap()
     setInputFocus()
   }
 
@@ -78,14 +70,13 @@ const FormaRacun = () => {
           >
             Opis
           </label>
-          <SunEditor
-            value={opis}
-            onChange={(content) => setOpis(content)}
+          <textarea
+            value={formData.opis}
+            onChange={handleChange}
             type='text'
             className='block w-full px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none h-28 hover:border-gray-500 focus:outline-none focus:shadow-outline'
             id='posao'
             name='opis'
-            setOptions={{ buttonList: buttonList.basic }}
           />
         </div>
         <div className='flex items-center justify-between mb-6'>

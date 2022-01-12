@@ -64,7 +64,7 @@ const PosaoList = ({ posao, rb, id }) => {
           <time className='block -mb-2 text-sm'>{datum}</time>
           <time className='text-sm italic '>{vrijeme}h</time>
         </div>
-        <p dangerouslySetInnerHTML={{ __html: `${posao?.opis}` }}></p>
+        <p>{posao?.opis}</p>
         <TiDocumentDelete
           className='absolute top-0 text-red-500 cursor-pointer right-2'
           size={25}
