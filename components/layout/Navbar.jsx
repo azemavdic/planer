@@ -1,23 +1,27 @@
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import NavbarIcon from './NavbarIcon'
+import { BsFillHouseFill } from 'react-icons/bs'
+import { RiParentFill, RiBillFill } from 'react-icons/ri'
+import { MdWork } from 'react-icons/md'
 
 const Navbar = () => {
-  const [title, setTitle] = useState('')
   const router = useRouter()
 
   return (
     <div className='mb-2 shadow-lg navbar bg-neutral text-neutral-content rounded-box'>
       <div className='flex-1 hidden px-2 mx-2 lg:flex'>
         <span className='text-lg font-bold'>
-          {router.pathname === '/mama'
-            ? 'Mama'
-            : router.pathname === '/posao'
-            ? 'Posao'
-            : router.pathname === '/kuca'
-            ? 'Kuća'
-            : router.pathname === '/racuni'
-            ? 'Računi'
-            : 'Početna'}
+          {router.pathname === '/mama' ? (
+            <NavbarIcon naziv='Mama' Ikona={RiParentFill} />
+          ) : router.pathname === '/posao' ? (
+            <NavbarIcon naziv='Posao' Ikona={MdWork} />
+          ) : router.pathname === '/kuca' ? (
+            <NavbarIcon naziv='Kuća' Ikona={BsFillHouseFill} />
+          ) : router.pathname === '/racuni' ? (
+            <NavbarIcon naziv='Računi' Ikona={RiBillFill} />
+          ) : (
+            'Početna'
+          )}
         </span>
       </div>
       <div className='justify-center flex-grow w-full'>

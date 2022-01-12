@@ -3,6 +3,8 @@ import { RiParentFill, RiBillFill } from 'react-icons/ri'
 import { MdWork } from 'react-icons/md'
 import SidebarMeni from './SidebarMeni'
 import Link from 'next/link'
+import dayjs from 'dayjs'
+import { useEffect, useState } from 'react'
 
 const sidebarMeni = [
   {
@@ -28,16 +30,35 @@ const sidebarMeni = [
 ]
 
 const Sidebar = () => {
+  const [vrijeme, setVrijeme] = useState(null)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const vrijemes = dayjs(new Date()).format('HH:mm:ss')
+      setVrijeme(vrijemes)
+    }, 1000)
+    return () => clearInterval(interval)
+  }, [])
+  const datum = new Date()
+
   return (
-    <div className='h-screen'>
+    <div className='h-screen '>
       <Link href='/' passHref>
-        <h1 className='text-3xl font-bold p-6 cursor-pointer'>Planer</h1>
+        <h1 className='p-6 text-3xl font-bold cursor-pointer'>Planer</h1>
       </Link>
-      <ul className='mt-10'>
-        {sidebarMeni.map((meni) => (
-          <SidebarMeni key={meni.naziv} meni={meni} />
-        ))}
-      </ul>
+      <div className='flex flex-col justify-around space-y-44'>
+        <div>
+          <ul className='mt-10'>
+            {sidebarMeni.map((meni) => (
+              <SidebarMeni key={meni.naziv} meni={meni} />
+            ))}
+          </ul>
+        </div>
+        <div>
+          <p>{datum.toLocaleDateString()}</p>
+          <p>{vrijeme}</p>
+        </div>
+      </div>
     </div>
   )
 }
