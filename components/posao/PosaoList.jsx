@@ -13,11 +13,11 @@ const PosaoList = ({ posao, rb, id }) => {
   const vrijeme = dayjs(posao?.createdAt).format('HH:mm')
 
   let zavrsenClassName =
-    'flex border-l-8 items-center gap-10 rounded-lg relative'
+    'flex border-l-8 items-center gap-10 rounded-lg relative mb-4'
   if (posao?.zavrsen) {
-    zavrsenClassName += ' border-green-400'
+    zavrsenClassName += ' border-green-400 shadow-lg shadow-green-400/40'
   } else {
-    zavrsenClassName += ' border-red-400'
+    zavrsenClassName += ' border-red-400 shadow-lg shadow-red-400/40'
   }
   const { refetch } = useGetAllPosaoQuery()
   const { posaoToggle } = useGetAllPosaoQuery(undefined, {
@@ -58,8 +58,8 @@ const PosaoList = ({ posao, rb, id }) => {
   return (
     <>
       <div className={zavrsenClassName} onDoubleClick={toggleZavrsen}>
-        <p className='p-2'>{rb}</p>
-        <div>
+        {/* <p className='p-2'>{rb}</p> */}
+        <div className='p-2 border-r-2'>
           <p className='py-5 font-bold'>{posao?.naziv}</p>
           <time className='block -mb-2 text-sm'>{datum}</time>
           <time className='text-sm italic '>{vrijeme}h</time>
@@ -71,7 +71,7 @@ const PosaoList = ({ posao, rb, id }) => {
           onClick={() => handleDeletePosao(id)}
         />
       </div>
-      <div className='divider'></div>
+      {/* <div className='divider'></div> */}
     </>
   )
 }

@@ -15,7 +15,6 @@ const Posao = () => {
   useEffect(() => {
     setPosaoState(data?.posao)
   }, [data])
-  console.log(posaoState)
 
   const { posaoZavrsen } = useGetAllPosaoQuery(undefined, {
     selectFromResult: ({ data }) => ({
@@ -27,6 +26,10 @@ const Posao = () => {
       posaoNezavrsen: data?.posao.filter((posao) => posao?.zavrsen === false),
     }),
   })
+
+  const styleBadge = 'p-4 border-none cursor-pointer badge shadow-lg'
+  const styleBadgeZavrsen = `${styleBadge} bg-green-700 shadow-green-700/40`
+  const styleBadgeNezavrsen = `${styleBadge} bg-red-600 shadow-red-600/40`
 
   const filterNezavrseni = () => {
     setPosaoState(posaoNezavrsen)
@@ -48,16 +51,10 @@ const Posao = () => {
         <title>Planer - Posao</title>
       </Head>
       <div className='flex items-center justify-center mt-5 space-x-4'>
-        <p
-          className='p-4 bg-red-600 border-none cursor-pointer badge'
-          onClick={filterNezavrseni}
-        >
+        <p className={styleBadgeNezavrsen} onClick={filterNezavrseni}>
           Nezavršene: <span className='ml-2'>{posaoNezavrsen?.length}</span>
         </p>
-        <p
-          className='p-4 bg-green-700 border-none cursor-pointer badge'
-          onClick={filterZavrseni}
-        >
+        <p className={styleBadgeZavrsen} onClick={filterZavrseni}>
           Završene: <span className='ml-2'>{posaoZavrsen?.length}</span>
         </p>
         {filterActive && (
