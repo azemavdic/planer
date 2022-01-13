@@ -10,7 +10,9 @@ const MobileMenuItem = ({ Ikona, path }) => {
     return (
         <div className={className}>
             <Link href={path} passHref>
-                <Ikona size={35} />
+                <a>
+                    <Ikona size={35} />
+                </a>
             </Link>
         </div>
     );
