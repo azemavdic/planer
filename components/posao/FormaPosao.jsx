@@ -1,8 +1,11 @@
 import { useState } from 'react'
 import { useFocus } from '../../hooks/useFocus'
-import { useAddPosaoMutation } from '../../redux/apiQuery'
+import {
+  useAddMamaAktivnostMutation,
+  useAddPosaoMutation,
+} from '../../redux/apiQuery'
 
-const FormaRacun = () => {
+const FormaRacun = ({ referenca }) => {
   const [formData, setFormData] = useState({
     naziv: '',
     opis: '',
@@ -14,6 +17,7 @@ const FormaRacun = () => {
   const [greska, setGreska] = useState(null)
 
   const [dodajPosao, isLoading] = useAddPosaoMutation()
+  const [dodajMamaAktivnost, isLoadingMama] = useAddMamaAktivnostMutation()
 
   const handleChange = (e) => {
     const name = e.target.name
@@ -35,8 +39,11 @@ const FormaRacun = () => {
       return
     }
     setFormData({ naziv: '', opis: '', zavrsen: false })
-    // dodajPosao(formData, dispatch);
-    await dodajPosao(formData).unwrap()
+    if (referenca === 'mama') {
+      await dodajMamaAktivnost(formData).unwrap()
+    } else {
+      await dodajPosao(formData).unwrap()
+    }
     setInputFocus()
   }
 
@@ -96,8 +103,8 @@ const FormaRacun = () => {
           />
         </div>
         <button
-          disabled={!isLoading}
-          className='btn btn-wide disabled:bg-gray-200'
+          disabled={referenca === 'mama' ? !isLoadingMama : !isLoading}
+          className='btn btn-wide disabled:bg-gray-200 disabled:loading'
         >
           Potvrdi
         </button>
