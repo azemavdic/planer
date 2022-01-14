@@ -1,33 +1,8 @@
-import { BsFillHouseFill } from 'react-icons/bs';
-import { RiParentFill, RiBillFill } from 'react-icons/ri';
-import { MdWork } from 'react-icons/md';
 import SidebarMeni from './SidebarMeni';
 import Link from 'next/link';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
-
-const sidebarMeni = [
-    {
-        naziv: 'Kuća',
-        Ikona: BsFillHouseFill,
-        path: '/kuca',
-    },
-    {
-        naziv: 'Mama',
-        Ikona: RiParentFill,
-        path: '/mama',
-    },
-    {
-        naziv: 'Posao',
-        Ikona: MdWork,
-        path: '/posao',
-    },
-    {
-        naziv: 'Računi',
-        Ikona: RiBillFill,
-        path: '/racuni',
-    },
-];
+import { meni } from '../../data/meni';
 
 const Sidebar = () => {
     const [vrijeme, setVrijeme] = useState(null);
@@ -56,7 +31,7 @@ const Sidebar = () => {
             <div className='flex flex-col justify-around space-y-44'>
                 <div>
                     <ul className='mt-10'>
-                        {sidebarMeni.map((meni) => (
+                        {meni.map((meni) => (
                             <SidebarMeni key={meni.naziv} meni={meni} />
                         ))}
                     </ul>
