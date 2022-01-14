@@ -73,6 +73,14 @@ export const api = createApi({
             }),
             invalidatesTags: [{ type: 'Mama', id: 'LIST' }],
         }),
+        updateMamaAktivnost: build.mutation({
+            query: ({ id, ...rest }) => ({
+                url: `mama/${id}`,
+                method: 'PUT',
+                body: rest,
+            }),
+            invalidatesTags: [{ type: 'Mama', id: 'LIST' }],
+        }),
         toggleZavrsenMama: build.mutation({
             query: ({ id, ...rest }) => ({
                 url: `mama/${id}`,
@@ -94,4 +102,5 @@ export const {
     useAddMamaAktivnostMutation,
     useIzbrisiMamaAktivnostMutation,
     useToggleZavrsenMamaMutation,
+    useUpdateMamaAktivnostMutation,
 } = api;

@@ -3,11 +3,11 @@ import { useFocus } from '../../hooks/useFocus';
 import {
     useAddMamaAktivnostMutation,
     useAddPosaoMutation,
-    useGetAllPosaoQuery,
     useUpdatePosaoMutation,
+    useUpdateMamaAktivnostMutation,
 } from '../../redux/apiQuery';
 
-const FormaRacun = ({
+const FormaPosao = ({
     referenca,
     isEditing,
     setIsEditing,
@@ -45,15 +45,10 @@ const FormaRacun = ({
         }));
     };
 
-    const { posaoState } = useGetAllPosaoQuery(undefined, {
-        selectFromResult: ({ data }) => ({
-            posaoState: data?.posao.find(
-                (posao) => posao._id === editedItem._id
-            ),
-        }),
-    });
-
     const [updatePosao] = useUpdatePosaoMutation({
+        fixedCacheKey: 'shared-update-post',
+    });
+    const [updateMamaAkt] = useUpdateMamaAktivnostMutation({
         fixedCacheKey: 'shared-update-post',
     });
 
@@ -84,16 +79,20 @@ const FormaRacun = ({
             return;
         }
         if (referenca === 'mama') {
-            await dodajMamaAktivnost(formData).unwrap();
+            await updateMamaAkt({
+                id: editedItem?._id,
+                naziv: editedItem?.naziv,
+                opis: editedItem?.opis,
+                zavrsen: editedItem?.zavrsen,
+            }).unwrap();
         } else {
             await updatePosao({
-                id: posaoState?._id,
+                id: editedItem?._id,
                 naziv: editedItem?.naziv,
                 opis: editedItem?.opis,
                 zavrsen: editedItem?.zavrsen,
             }).unwrap();
         }
-        // setFormData({ naziv: '', opis: '', zavrsen: false });
         setIsEditing(false);
         setInputFocus();
     };
@@ -169,6 +168,16 @@ const FormaRacun = ({
                 >
                     {isEditing ? 'Ispravi' : 'Potvrdi'}
                 </button>
+                {isEditing && (
+                    <div className='text-center'>
+                        <button
+                            onClick={() => setIsEditing(false)}
+                            className='btn btn-outline btn-error btn-xs'
+                        >
+                            Poništi
+                        </button>
+                    </div>
+                )}
                 {greska && (
                     <p className='mt-2 text-center text-red-500'>{greska}</p>
                 )}
@@ -177,4 +186,4 @@ const FormaRacun = ({
     );
 };
 
-export default FormaRacun;
+export default FormaPosao;

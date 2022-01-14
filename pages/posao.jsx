@@ -5,7 +5,6 @@ import FormaPosao from '../components/posao/FormaPosao';
 import PosaoList from '../components/posao/PosaoList';
 import { useGetAllPosaoQuery } from '../redux/apiQuery';
 const Posao = () => {
-    let rb = 1;
     const [posaoState, setPosaoState] = useState(null);
     const [filterActive, setfilterActive] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
@@ -100,7 +99,6 @@ const Posao = () => {
                                     key={posao._id}
                                     id={posao._id}
                                     data={posao}
-                                    rb={rb++}
                                     isEditing={isEditing}
                                     setIsEditing={setIsEditing}
                                     editedItem={editedItem}
