@@ -6,12 +6,12 @@ import {
   useIzbrisiPosaoMutation,
   useToggleZavrsenMamaMutation,
   useToggleZavrsenMutation,
-} from '../../redux/apiQuery'
+} from '../../../redux/apiQuery'
 import dayjs from 'dayjs'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
-const PosaoList = ({
+const AktivnostiLista = ({
   data,
   id,
   referenca,
@@ -91,7 +91,7 @@ const PosaoList = ({
   return (
     <>
       <div className={zavrsenClassName} onDoubleClick={toggleZavrsen}>
-        <div className='p-2 lg:border-r-2 w-full lg:w-max'>
+        <div className='p-2 lg:border-r-2 border-b-2 lg:border-b-0 w-full lg:w-max'>
           <p className='lg:py-5 font-bold text-center'>{data?.naziv}</p>
           <div className='flex items-center lg:block justify-between'>
             <time className='block -mb-2 text-sm'>{datum}</time>
@@ -114,4 +114,4 @@ const PosaoList = ({
   )
 }
 
-export default PosaoList
+export default AktivnostiLista
