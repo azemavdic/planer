@@ -23,8 +23,9 @@ const AktivnostiForma = ({
 
   const [inputRef, setInputFocus] = useFocus()
 
-  const [dodajPosao, isLoading] = useAddPosaoMutation()
-  const [dodajMamaAktivnost, isLoadingMama] = useAddMamaAktivnostMutation()
+  const [dodajPosao, { isLoading: isLoadingPosao }] = useAddPosaoMutation()
+  const [dodajMamaAktivnost, { isLoading: isLoadingMama }] =
+    useAddMamaAktivnostMutation()
 
   const handleChange = (e) => {
     const name = e.target.name
@@ -153,7 +154,7 @@ const AktivnostiForma = ({
           />
         </div>
         <button
-          disabled={referenca === 'mama' ? !isLoadingMama : !isLoading}
+          disabled={referenca === 'mama' ? isLoadingMama : isLoadingPosao}
           className='btn btn-wide disabled:bg-gray-200 disabled:loading'
         >
           {isEditing ? 'Ispravi' : 'Potvrdi'}
