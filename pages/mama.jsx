@@ -9,7 +9,6 @@ import Modal from '../components/layout/Modal'
 const Mama = () => {
   const [mamaState, setmamaState] = useState(null)
   const [filterActive, setfilterActive] = useState(false)
-  const [isEditing, setIsEditing] = useState(false)
   const [editedItem, setEditedItem] = useState({})
 
   const { data, isError, isLoading } = useGetAllMamaAktivnostiQuery()
@@ -87,8 +86,6 @@ const Mama = () => {
                   id={mama._id}
                   data={mama}
                   referenca='mama'
-                  isEditing={isEditing}
-                  setIsEditing={setIsEditing}
                   editedItem={editedItem}
                   setEditedItem={setEditedItem}
                 />
@@ -98,11 +95,9 @@ const Mama = () => {
         </div>
       </div>
       <DodajButton />
-      <Modal setIsEditing={setIsEditing}>
+      <Modal>
         <div className='flex items-center justify-center'>
           <AktivnostiForma
-            isEditing={isEditing}
-            setIsEditing={setIsEditing}
             editedItem={editedItem}
             setEditedItem={setEditedItem}
             referenca='mama'

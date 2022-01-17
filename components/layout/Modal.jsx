@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { isEditing } from '../../redux/editingItemSlice'
 import { showModal } from '../../redux/modalSlice'
 
-const Modal = ({ children, title, setIsEditing }) => {
+const Modal = ({ children, title }) => {
   const [isBrowser, setIsBrowser] = useState(false)
 
   const showModalSelector = useSelector((state) => state.modal.value)
@@ -15,7 +16,7 @@ const Modal = ({ children, title, setIsEditing }) => {
 
   const handleClose = (e) => {
     e.preventDefault()
-    setIsEditing(false)
+    dispatch(isEditing(false))
     dispatch(showModal(false))
   }
 

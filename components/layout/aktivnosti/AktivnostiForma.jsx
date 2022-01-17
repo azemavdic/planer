@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { useFocus } from '../../../hooks/useFocus'
 import {
@@ -7,21 +8,17 @@ import {
   useUpdatePosaoMutation,
   useUpdateMamaAktivnostMutation,
 } from '../../../redux/apiQuery'
+import { isEditing } from '../../../redux/editingItemSlice'
 import { showModal } from '../../../redux/modalSlice'
 
-const AktivnostiForma = ({
-  referenca,
-  isEditing,
-  setIsEditing,
-  editedItem,
-  setEditedItem,
-}) => {
+const AktivnostiForma = ({ referenca, editedItem, setEditedItem }) => {
   const [formData, setFormData] = useState({
     naziv: '',
     opis: '',
     zavrsen: false,
   })
   const [greska, setGreska] = useState(null)
+  const isEditingSelector = useSelector((state) => state.edit.value)
 
   const [inputRef, setInputFocus] = useFocus()
   const dispatch = useDispatch()
@@ -100,7 +97,7 @@ const AktivnostiForma = ({
         zavrsen: editedItem?.zavrsen,
       }).unwrap()
     }
-    setIsEditing(false)
+    dispatch(isEditing(false))
     setInputFocus()
     dispatch(showModal(false))
   }
@@ -108,7 +105,7 @@ const AktivnostiForma = ({
   return (
     <div className='w-full max-w-xs'>
       <form
-        onSubmit={isEditing ? handleEditSubmit : handleSubmit}
+        onSubmit={isEditingSelector ? handleEditSubmit : handleSubmit}
         className='px-8 pt-6 pb-8 mt-4 mb-4 bg-white rounded-lg shadow-lg'
       >
         <div className='mb-4'>
@@ -119,8 +116,8 @@ const AktivnostiForma = ({
             Naziv aktivnosti
           </label>
           <input
-            value={isEditing ? editedItem?.naziv : formData.naziv}
-            onChange={isEditing ? handleChangeEditItem : handleChange}
+            value={isEditingSelector ? editedItem?.naziv : formData.naziv}
+            onChange={isEditingSelector ? handleChangeEditItem : handleChange}
             name='naziv'
             id='posao'
             type='text'
@@ -136,8 +133,8 @@ const AktivnostiForma = ({
             Opis
           </label>
           <textarea
-            value={isEditing ? editedItem?.opis : formData.opis}
-            onChange={isEditing ? handleChangeEditItem : handleChange}
+            value={isEditingSelector ? editedItem?.opis : formData.opis}
+            onChange={isEditingSelector ? handleChangeEditItem : handleChange}
             type='text'
             className='block w-full px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none h-28 hover:border-gray-500 focus:outline-none focus:shadow-outline'
             id='posao'
@@ -152,15 +149,15 @@ const AktivnostiForma = ({
             Završen
           </label>
           <input
-            value={isEditing ? editedItem?.zavrsen : formData.zavrsen}
-            onChange={isEditing ? handleChangeEditItem : handleChange}
+            value={isEditingSelector ? editedItem?.zavrsen : formData.zavrsen}
+            onChange={isEditingSelector ? handleChangeEditItem : handleChange}
             name='zavrsen'
             id='posao'
             type='checkbox'
             className='w-5 h-5'
           />
         </div>
-        {isEditing ? (
+        {isEditingSelector ? (
           <button
             disabled={
               referenca === 'mama' ? isLoadingMamaEdit : isLoadingPosaoEdit
@@ -178,10 +175,10 @@ const AktivnostiForma = ({
           </button>
         )}
 
-        {isEditing && (
+        {isEditingSelector && (
           <div className='text-center'>
             <button
-              onClick={() => setIsEditing(false)}
+              onClick={() => dispatch(isEditing(false))}
               className='btn btn-outline btn-error btn-xs'
             >
               Poništi

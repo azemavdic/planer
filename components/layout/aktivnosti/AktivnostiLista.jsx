@@ -12,15 +12,9 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { useDispatch } from 'react-redux'
 import { showModal } from '../../../redux/modalSlice'
+import { isEditing } from '../../../redux/editingItemSlice'
 
-const AktivnostiLista = ({
-  data,
-  id,
-  referenca,
-  setIsEditing,
-  setEditedItem,
-  setShowModal,
-}) => {
+const AktivnostiLista = ({ data, id, referenca, setEditedItem }) => {
   const dispatch = useDispatch()
 
   const datum = dayjs(data?.createdAt).format('DD.MM.YYYY')
@@ -88,7 +82,7 @@ const AktivnostiLista = ({
 
   const handleEditClick = () => {
     dispatch(showModal(true))
-    setIsEditing(true)
+    dispatch(isEditing(true))
     setEditedItem(data)
   }
 
