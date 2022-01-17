@@ -85,7 +85,7 @@ const Posao = () => {
                         setEditedItem={setEditedItem}
                     />
                 </div> */}
-                <div className='lg:w-9/12 w-full'>
+                <div className='lg:w-9/12 w-full '>
                     <h3 className='text-xl font-bold'>Pregled aktivnosti</h3>
                     {data?.posao.length === 0 ? (
                         <div className='flex items-center justify-center h-[25rem]'>
