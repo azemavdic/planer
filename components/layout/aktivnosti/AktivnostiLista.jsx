@@ -25,7 +25,7 @@ const AktivnostiLista = ({
     const vrijeme = dayjs(data?.createdAt).format('HH:mm');
 
     let zavrsenClassName =
-        'flex border-l-8 flex-col lg:flex-row items-center bg-white lg:gap-10 rounded-lg relative mb-4 cursor-pointer';
+        'flex border-l-8 flex-col lg:flex-row items-center bg-white lg:gap-10 rounded-lg relative mb-4 cursor-pointer select-none';
     if (data?.zavrsen) {
         zavrsenClassName += ' border-green-400 shadow-lg shadow-green-400/40';
     } else {
