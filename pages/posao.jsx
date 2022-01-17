@@ -74,17 +74,6 @@ const Posao = () => {
                 )}
             </div>
             <div className='flex items-center justify-center gap-4 mt-5'>
-                {/* <div className='col-span-12 mx-auto lg:col-span-4'>
-                    <h3 className='text-xl font-bold'>
-                        {isEditing ? 'Edituj aktivnost' : 'Dodaj aktivnost'}
-                    </h3>
-                    <AktivnostiForma    
-                        isEditing={isEditing}
-                        setIsEditing={setIsEditing}
-                        editedItem={editedItem}
-                        setEditedItem={setEditedItem}
-                    />
-                </div> */}
                 <div className='lg:w-9/12 w-full '>
                     <h3 className='text-xl font-bold'>Pregled aktivnosti</h3>
                     {data?.posao.length === 0 ? (
@@ -114,7 +103,11 @@ const Posao = () => {
                 </div>
             </div>
             <DodajButton setShowModal={setShowModal} />
-            <Modal show={showModal} onClose={() => setShowModal(false)}>
+            <Modal
+                show={showModal}
+                onClose={() => setShowModal(false)}
+                setIsEditing={setIsEditing}
+            >
                 {/* <h2 className='text-lg font-bold'>
                     {isEditing ? 'Ispravi Aktivnost' : 'Dodaj Aktivnost'}{' '}
                 </h2> */}

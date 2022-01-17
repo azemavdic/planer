@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-const Modal = ({ show, children, title, onClose }) => {
+const Modal = ({ show, children, title, onClose, setIsEditing }) => {
     const [isBrowser, setIsBrowser] = useState(false);
 
     useEffect(() => {
@@ -10,6 +10,7 @@ const Modal = ({ show, children, title, onClose }) => {
 
     const handleClose = (e) => {
         e.preventDefault();
+        setIsEditing(false);
         onClose();
     };
 
