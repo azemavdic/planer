@@ -1,39 +1,41 @@
-import { useEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
+import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { showModal } from '../../redux/modalSlice'
 
-const Modal = ({ show, children, title, onClose, setIsEditing }) => {
-    const [isBrowser, setIsBrowser] = useState(false);
+const Modal = ({ children, title, setIsEditing }) => {
+  const [isBrowser, setIsBrowser] = useState(false)
 
-    useEffect(() => {
-        setIsBrowser(true);
-    }, []);
+  const showModalSelector = useSelector((state) => state.modal.value)
+  const dispatch = useDispatch()
 
-    const handleClose = (e) => {
-        e.preventDefault();
-        setIsEditing(false);
-        onClose();
-    };
+  useEffect(() => {
+    setIsBrowser(true)
+  }, [])
 
-    const modalContent = show ? (
-        <div className='absolute top-0 left-0 w-full h-full flex justify-center items-center bg-black/60'>
-            <div className='relative'>
-                <div className='absolute right-4 top-5 font-bold text-xl cursor-pointer'>
-                    <a onClick={handleClose}>x</a>
-                </div>
-                {title && <div className=''>{title}</div>}
-                <div className=''>{children}</div>
-            </div>
+  const handleClose = (e) => {
+    e.preventDefault()
+    setIsEditing(false)
+    dispatch(showModal(false))
+  }
+
+  const modalContent = showModalSelector ? (
+    <div className='absolute top-0 left-0 w-full h-full flex justify-center items-center bg-black/60'>
+      <div className='relative'>
+        <div className='absolute right-4 top-5 font-bold text-xl cursor-pointer'>
+          <a onClick={handleClose}>x</a>
         </div>
-    ) : null;
+        {title && <div className=''>{title}</div>}
+        <div className=''>{children}</div>
+      </div>
+    </div>
+  ) : null
 
-    if (isBrowser) {
-        return createPortal(
-            modalContent,
-            document.getElementById('modal-root')
-        );
-    } else {
-        return null;
-    }
-};
+  if (isBrowser) {
+    return createPortal(modalContent, document.getElementById('modal-root'))
+  } else {
+    return null
+  }
+}
 
-export default Modal;
+export default Modal

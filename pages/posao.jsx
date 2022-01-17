@@ -11,7 +11,6 @@ const Posao = () => {
   const [filterActive, setfilterActive] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [editedItem, setEditedItem] = useState({})
-  const [showModal, setShowModal] = useState(false)
 
   const { data, isError, isLoading } = useGetAllPosaoQuery()
 
@@ -81,7 +80,7 @@ const Posao = () => {
               <Loading />
             </div>
           ) : (
-            <div className='p-4 w-full overflow-y-visible overflow-x-auto bg-white shadow-lg h-[30rem] md:h-[70rem] lg:h-[26rem] mt-4 rounded-lg'>
+            <div className='p-4 w-full overflow-y-visible overflow-x-auto bg-white shadow-lg h-[25rem] mt-4 rounded-lg'>
               {posaoState?.map((posao) => (
                 <AktivnostiLista
                   key={posao._id}
@@ -92,26 +91,20 @@ const Posao = () => {
                   setIsEditing={setIsEditing}
                   editedItem={editedItem}
                   setEditedItem={setEditedItem}
-                  setShowModal={setShowModal}
                 />
               ))}
             </div>
           )}
         </div>
       </div>
-      <DodajButton setShowModal={setShowModal} />
-      <Modal
-        show={showModal}
-        onClose={() => setShowModal(false)}
-        setIsEditing={setIsEditing}
-      >
+      <DodajButton />
+      <Modal setIsEditing={setIsEditing}>
         <div className='flex items-center justify-center'>
           <AktivnostiForma
             isEditing={isEditing}
             setIsEditing={setIsEditing}
             editedItem={editedItem}
             setEditedItem={setEditedItem}
-            setShowModal={setShowModal}
           />
         </div>
       </Modal>

@@ -11,7 +11,6 @@ const Mama = () => {
   const [filterActive, setfilterActive] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [editedItem, setEditedItem] = useState({})
-  const [showModal, setShowModal] = useState(false)
 
   const { data, isError, isLoading } = useGetAllMamaAktivnostiQuery()
 
@@ -92,26 +91,20 @@ const Mama = () => {
                   setIsEditing={setIsEditing}
                   editedItem={editedItem}
                   setEditedItem={setEditedItem}
-                  setShowModal={setShowModal}
                 />
               ))}
             </div>
           )}
         </div>
       </div>
-      <DodajButton setShowModal={setShowModal} />
-      <Modal
-        show={showModal}
-        onClose={() => setShowModal(false)}
-        setIsEditing={setIsEditing}
-      >
+      <DodajButton />
+      <Modal setIsEditing={setIsEditing}>
         <div className='flex items-center justify-center'>
           <AktivnostiForma
             isEditing={isEditing}
             setIsEditing={setIsEditing}
             editedItem={editedItem}
             setEditedItem={setEditedItem}
-            setShowModal={setShowModal}
             referenca='mama'
           />
         </div>

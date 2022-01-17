@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useFocus } from '../../../hooks/useFocus'
 import {
   useAddMamaAktivnostMutation,
@@ -6,6 +7,7 @@ import {
   useUpdatePosaoMutation,
   useUpdateMamaAktivnostMutation,
 } from '../../../redux/apiQuery'
+import { showModal } from '../../../redux/modalSlice'
 
 const AktivnostiForma = ({
   referenca,
@@ -13,7 +15,6 @@ const AktivnostiForma = ({
   setIsEditing,
   editedItem,
   setEditedItem,
-  setShowModal,
 }) => {
   const [formData, setFormData] = useState({
     naziv: '',
@@ -23,6 +24,7 @@ const AktivnostiForma = ({
   const [greska, setGreska] = useState(null)
 
   const [inputRef, setInputFocus] = useFocus()
+  const dispatch = useDispatch()
 
   const [dodajPosao, { isLoading: isLoadingPosao }] = useAddPosaoMutation()
   const [dodajMamaAktivnost, { isLoading: isLoadingMama }] =
@@ -72,7 +74,7 @@ const AktivnostiForma = ({
       await dodajPosao(formData).unwrap()
     }
     setInputFocus()
-    setShowModal(false)
+    dispatch(showModal(false))
   }
   const handleEditSubmit = async (e) => {
     e.preventDefault()
@@ -100,7 +102,7 @@ const AktivnostiForma = ({
     }
     setIsEditing(false)
     setInputFocus()
-    setShowModal(false)
+    dispatch(showModal(false))
   }
 
   return (
