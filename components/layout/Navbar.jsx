@@ -3,6 +3,7 @@ import NavbarIcon from './NavbarIcon'
 import { BsFillHouseFill } from 'react-icons/bs'
 import { RiParentFill, RiBillFill } from 'react-icons/ri'
 import { MdWork } from 'react-icons/md'
+import Link from 'next/link'
 
 const Navbar = () => {
   const router = useRouter()
@@ -36,7 +37,9 @@ const Navbar = () => {
       <div className='flex-none'>
         <div className='avatar'>
           <div className='w-10 h-10 m-1 rounded-full'>
-            <img src='https://i.pravatar.cc/500' />
+            <Link href='/' passHref>
+              <img src='https://i.pravatar.cc/500' />
+            </Link>
           </div>
         </div>
       </div>

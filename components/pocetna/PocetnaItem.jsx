@@ -32,7 +32,7 @@ const PocetnaItem = ({ naziv, path }) => {
       break
   }
   return (
-    <section className='flex justify-between items-center lg:justify-center mb-4 lg:space-x-4'>
+    <section className='flex justify-between md:justify-center md:space-x-10 items-center lg:justify-center mb-4 lg:space-x-4'>
       <div className='flex space-x-2 items-center'>
         <p>Nezavršene aktivnosti {naziv}</p>
         <span className='badge bg-red-600 border-none p-4'>

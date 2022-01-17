@@ -13,6 +13,7 @@ import withReactContent from 'sweetalert2-react-content'
 import { useDispatch } from 'react-redux'
 import { showModal } from '../../../redux/modalSlice'
 import { isEditing } from '../../../redux/editingItemSlice'
+import Loading from '../Loading'
 
 const AktivnostiLista = ({ data, id, referenca, setEditedItem }) => {
   const dispatch = useDispatch()
@@ -40,9 +41,10 @@ const AktivnostiLista = ({ data, id, referenca, setEditedItem }) => {
     }),
   })
   const [izbrisiPosao] = useIzbrisiPosaoMutation()
-  const [izmijeniZavrsen, result] = useToggleZavrsenMutation({
-    fixedCacheKey: 'shared-update-post',
-  })
+  const [izmijeniZavrsen, { isLoading: isLoadingPosaoToggle }] =
+    useToggleZavrsenMutation({
+      fixedCacheKey: 'shared-update-post',
+    })
   const [izbrisiMamaAktivnost] = useIzbrisiMamaAktivnostMutation()
   const [izmijeniZavrsenMama] = useToggleZavrsenMamaMutation({
     fixedCacheKey: 'shared-update-post',
@@ -96,6 +98,7 @@ const AktivnostiLista = ({ data, id, referenca, setEditedItem }) => {
             <time className='text-sm italic '>{vrijeme}h</time>
           </div>
         </div>
+        {isLoadingPosaoToggle && <Loading item='badge' />}
         <p className='p-2'>{data?.opis}</p>
         <TiDocumentDelete
           className='absolute top-0 text-red-500 transition-all cursor-pointer right-2 active:scale-90'
