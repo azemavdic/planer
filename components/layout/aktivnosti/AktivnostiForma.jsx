@@ -13,6 +13,7 @@ const AktivnostiForma = ({
     setIsEditing,
     editedItem,
     setEditedItem,
+    setShowModal,
 }) => {
     const [formData, setFormData] = useState({
         naziv: '',
@@ -71,6 +72,7 @@ const AktivnostiForma = ({
             await dodajPosao(formData).unwrap();
         }
         setInputFocus();
+        setShowModal(false);
     };
     const handleEditSubmit = async (e) => {
         e.preventDefault();
@@ -98,13 +100,14 @@ const AktivnostiForma = ({
         }
         setIsEditing(false);
         setInputFocus();
+        setShowModal(false);
     };
 
     return (
         <div className='w-full max-w-xs'>
             <form
                 onSubmit={isEditing ? handleEditSubmit : handleSubmit}
-                className='px-8 pt-6 pb-8 mt-4 mb-4 bg-white rounded-lg shadow-md'
+                className='px-8 pt-6 pb-8 mt-4 mb-4 bg-white rounded-lg shadow-lg'
             >
                 <div className='mb-4'>
                     <label
