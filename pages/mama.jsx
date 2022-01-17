@@ -4,11 +4,14 @@ import Loading from '../components/layout/Loading'
 import AktivnostiForma from '../components/layout/aktivnosti/AktivnostiForma'
 import AktivnostiLista from '../components/layout/aktivnosti/AktivnostiLista'
 import { useGetAllMamaAktivnostiQuery } from '../redux/apiQuery'
+import DodajButton from '../components/layout/DodajButton'
+import Modal from '../components/layout/Modal'
 const Mama = () => {
   const [mamaState, setmamaState] = useState(null)
   const [filterActive, setfilterActive] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [editedItem, setEditedItem] = useState({})
+  const [showModal, setShowModal] = useState(false)
 
   const { data, isError, isLoading } = useGetAllMamaAktivnostiQuery()
 
@@ -46,7 +49,7 @@ const Mama = () => {
   }
 
   return (
-    <>
+    <div className='relative'>
       <Head>
         <title>Planer - Mama</title>
       </Head>
@@ -66,18 +69,8 @@ const Mama = () => {
           </p>
         )}
       </div>
-      <div className='grid grid-cols-12 gap-4 mt-5'>
-        <div className='col-span-12 mx-auto lg:col-span-4'>
-          <h3 className='text-xl font-bold'>Dodaj aktivnost</h3>
-          <AktivnostiForma
-            referenca='mama'
-            isEditing={isEditing}
-            setIsEditing={setIsEditing}
-            editedItem={editedItem}
-            setEditedItem={setEditedItem}
-          />
-        </div>
-        <div className='col-span-12 lg:col-span-8'>
+      <div className='flex items-center justify-center gap-4 mt-5'>
+        <div className='lg:w-9/12 w-full'>
           <h3 className='text-xl font-bold'>Pregled aktivnosti</h3>
           {data?.mama.length === 0 ? (
             <div className='flex items-center justify-center h-[25rem]'>
@@ -99,13 +92,31 @@ const Mama = () => {
                   setIsEditing={setIsEditing}
                   editedItem={editedItem}
                   setEditedItem={setEditedItem}
+                  setShowModal={setShowModal}
                 />
               ))}
             </div>
           )}
         </div>
       </div>
-    </>
+      <DodajButton setShowModal={setShowModal} />
+      <Modal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        setIsEditing={setIsEditing}
+      >
+        <div className='flex items-center justify-center'>
+          <AktivnostiForma
+            isEditing={isEditing}
+            setIsEditing={setIsEditing}
+            editedItem={editedItem}
+            setEditedItem={setEditedItem}
+            setShowModal={setShowModal}
+            referenca='mama'
+          />
+        </div>
+      </Modal>
+    </div>
   )
 }
 
