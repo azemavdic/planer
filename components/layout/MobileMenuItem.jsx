@@ -30,10 +30,14 @@ const MobileMenuItem = ({ Ikona, path }) => {
         <a className='indicator'>
           <Ikona size={35} />
           {path === '/posao' && (
-            <div className='indicator-item badge'>{posaoNezavrsen?.length}</div>
+            <div className='indicator-item badge badge-warning'>
+              {posaoNezavrsen?.length}
+            </div>
           )}
           {path === '/mama' && (
-            <div className='indicator-item badge'>{mamaNezavrsen?.length}</div>
+            <div className='indicator-item badge badge-warning'>
+              {mamaNezavrsen?.length}
+            </div>
           )}
         </a>
       </Link>
