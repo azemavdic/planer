@@ -1,6 +1,9 @@
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import { useFocus } from '../../../hooks/useFocus'
+import { useDodajStrujaMutation } from '../../../redux/apiQuery'
+import { showModal } from '../../../redux/modalSlice'
 
 const Forma = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +12,13 @@ const Forma = () => {
   })
 
   const [greska, setGreska] = useState(false)
+
+  const [inputRef, setInputFocus] = useFocus()
+  const dispatch = useDispatch()
+
+  const isEditingSelector = useSelector((state) => state.edit.value)
+
+  const [dodajStruja] = useDodajStrujaMutation()
 
   const handleChange = (e) => {
     const name = e.target.name
@@ -21,8 +31,6 @@ const Forma = () => {
     })
   }
 
-  const [inputRef, setInputFocus] = useFocus()
-
   const handleSubmit = (e) => {
     e.preventDefault()
     if (formData.iznos === null || formData.mjesec === '') {
@@ -32,10 +40,9 @@ const Forma = () => {
       }, 3000)
       return
     }
-    setInputFocus()
+    dodajStruja(formData)
+    dispatch(showModal(false))
   }
-
-  const isEditingSelector = useSelector((state) => state.edit.value)
 
   return (
     <div className='w-full max-w-xs'>
@@ -67,14 +74,30 @@ const Forma = () => {
           >
             Mjesec
           </label>
-          <input
+          <select
             value={isEditingSelector ? editedItem?.mjesec : formData.mjesec}
             onChange={isEditingSelector ? handleChangeEditItem : handleChange}
             name='mjesec'
             id='struja'
             type='text'
             className='block w-full px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline'
-          />
+          >
+            <option value='' disabled>
+              Odaberi mjesec...
+            </option>
+            <option value='Januar'>Januar</option>
+            <option value='Februar'>Februar</option>
+            <option value='Mart'>Mart</option>
+            <option value='April'>April</option>
+            <option value='Maj'>Maj</option>
+            <option value='Juni'>Juni</option>
+            <option value='Juli'>Juli</option>
+            <option value='Avgust'>Avgust</option>
+            <option value='Septembar'>Septembar</option>
+            <option value='Oktobar'>Oktobar</option>
+            <option value='Novembar'>Novembar</option>
+            <option value='Decembar'>Decembar</option>
+          </select>
         </div>
         {isEditingSelector ? (
           <button
