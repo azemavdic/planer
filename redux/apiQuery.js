@@ -5,7 +5,7 @@ export const api = createApi({
     baseUrl: `${process.env.NEXT_PUBLIC_MY_URL}/api/`,
   }),
   // reducerPath: 'posaoApi',
-  tagTypes: ['Posao', 'Mama'],
+  tagTypes: ['Posao', 'Mama', 'Struja', 'Voda'],
   endpoints: (build) => ({
     getAllPosao: build.query({
       query: () => 'posao',
@@ -89,6 +89,26 @@ export const api = createApi({
       }),
       invalidatesTags: [{ type: 'Mama', id: 'LIST' }],
     }),
+    getStruja: build.query({
+      query: () => 'racun/struja',
+      providesTags: (result) =>
+        result
+          ? [
+              //   ...result.map(({ id }) => ({ type: 'Posao', id })),
+              { type: 'Struja', id: 'LIST' },
+            ]
+          : [{ type: 'Struja', id: 'LIST' }],
+    }),
+    getVoda: build.query({
+      query: () => 'racun/voda',
+      providesTags: (result) =>
+        result
+          ? [
+              //   ...result.map(({ id }) => ({ type: 'Posao', id })),
+              { type: 'Voda', id: 'LIST' },
+            ]
+          : [{ type: 'Voda', id: 'LIST' }],
+    }),
   }),
 })
 
@@ -103,4 +123,6 @@ export const {
   useIzbrisiMamaAktivnostMutation,
   useToggleZavrsenMamaMutation,
   useUpdateMamaAktivnostMutation,
+  useGetStrujaQuery,
+  useGetVodaQuery,
 } = api

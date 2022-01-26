@@ -1,20 +1,20 @@
-import FormaRacun from '../components/racun/FormaRacun'
-import TabelaRačuna from '../components/racun/TabelaRačuna'
 import Head from 'next/head'
+import Card from '../components/layout/racun/Card'
+import { racuni } from '../data/racuni'
 
 const Racuni = () => {
   return (
-    <div className='grid grid-cols-12 gap-4 mt-16 '>
+    <div className=''>
       <Head>
         <title>Planer - Računi</title>
       </Head>
-      <div className='col-span-12 mx-auto lg:col-span-4'>
-        <h3 className='text-xl font-bold'>Dodaj račun</h3>
-        <FormaRacun />
-      </div>
-      <div className='col-span-12 lg:col-span-8'>
-        <h3 className='text-xl font-bold'>Pregled računa</h3>
-        <TabelaRačuna />
+      <h3 className='text-xl font-bold'>Pregled računa</h3>
+      <div className='flex flex-wrap w-full gap-8 mt-10 mb-14'>
+        {racuni.map((racun) => (
+          // <div key={racun.naziv} className='flex flex-wrap w-full'>
+          <Card racun={racun} key={racun.naziv} />
+          // </div>
+        ))}
       </div>
     </div>
   )
