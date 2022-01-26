@@ -1,6 +1,6 @@
 import Head from 'next/head'
-import Card from '../components/layout/racun/Card'
-import { racuni } from '../data/racuni'
+import Card from '../../components/layout/racun/Card'
+import { racuni } from '../../data/racuni'
 
 const Racuni = () => {
   return (

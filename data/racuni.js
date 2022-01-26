@@ -9,25 +9,31 @@ export const racuni = [
   {
     naziv: 'Struja',
     Ikona: GiElectric,
+    path: '/racuni/struja',
   },
   {
     naziv: 'Voda',
     Ikona: IoIosWater,
+    path: '/racuni/voda',
   },
   {
     naziv: 'Smece',
     Ikona: BsFillTrashFill,
+    path: '/racuni/smece',
   },
   {
     naziv: 'Mobitel',
     Ikona: ImMobile,
+    path: '/racuni/mobitel',
   },
   {
     naziv: 'Kablovska',
     Ikona: FiAirplay,
+    path: '/racuni/kablovska',
   },
   {
     naziv: 'IPTV',
     Ikona: SiInternetarchive,
+    path: '/racuni/iptv',
   },
 ]

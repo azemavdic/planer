@@ -5,7 +5,16 @@ export const api = createApi({
     baseUrl: `${process.env.NEXT_PUBLIC_MY_URL}/api/`,
   }),
   // reducerPath: 'posaoApi',
-  tagTypes: ['Posao', 'Mama', 'Struja', 'Voda'],
+  tagTypes: [
+    'Posao',
+    'Mama',
+    'Struja',
+    'Voda',
+    'Smece',
+    'Mobitel',
+    'Kablovska',
+    'Iptv',
+  ],
   endpoints: (build) => ({
     getAllPosao: build.query({
       query: () => 'posao',
@@ -99,6 +108,14 @@ export const api = createApi({
             ]
           : [{ type: 'Struja', id: 'LIST' }],
     }),
+    DodajStruja: build.mutation({
+      query: (body) => ({
+        url: 'racun/struja',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: [{ type: 'Struja', id: 'LIST' }],
+    }),
     getVoda: build.query({
       query: () => 'racun/voda',
       providesTags: (result) =>
@@ -124,5 +141,6 @@ export const {
   useToggleZavrsenMamaMutation,
   useUpdateMamaAktivnostMutation,
   useGetStrujaQuery,
+  useDodajStrujaMutation,
   useGetVodaQuery,
 } = api
