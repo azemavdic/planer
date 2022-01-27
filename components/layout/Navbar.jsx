@@ -39,12 +39,14 @@ const Navbar = () => {
         <div className='avatar'>
           <div className='w-10 h-10 m-1 rounded-full'>
             <Link href='/' passHref>
-              <Image
-                width={50}
-                height={50}
-                src='https://scontent.ftzl2-1.fna.fbcdn.net/v/t1.6435-9/36969684_10214334981242897_7897955411460882432_n.jpg?_nc_cat=104&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=VXdVBOl6TwUAX-aTQyM&_nc_ht=scontent.ftzl2-1.fna&oh=00_AT9YWQef74COT2KA7gwht1yxHRIFlWsTEEqiVyGAzkAfJg&oe=6210F209'
-                alt='avatar'
-              />
+              <a>
+                <Image
+                  width={50}
+                  height={50}
+                  src='https://scontent.ftzl2-1.fna.fbcdn.net/v/t1.6435-9/36969684_10214334981242897_7897955411460882432_n.jpg?_nc_cat=104&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=VXdVBOl6TwUAX-aTQyM&_nc_ht=scontent.ftzl2-1.fna&oh=00_AT9YWQef74COT2KA7gwht1yxHRIFlWsTEEqiVyGAzkAfJg&oe=6210F209'
+                  alt='avatar'
+                />
+              </a>
             </Link>
           </div>
         </div>
