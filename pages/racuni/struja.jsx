@@ -2,13 +2,38 @@ import { useRouter } from 'next/router'
 import DodajButton from '../../components/layout/DodajButton'
 import Modal from '../../components/layout/Modal'
 import Forma from '../../components/layout/racun/Forma'
-import { useGetStrujaQuery } from '../../redux/apiQuery'
+import {
+  useGetStrujaQuery,
+  useIzbrisiStrujaMutation,
+} from '../../redux/apiQuery'
 import { BsFillTrashFill, BsFillPencilFill } from 'react-icons/bs'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 const Struja = () => {
   const router = useRouter()
 
   const { data } = useGetStrujaQuery()
+  const [izbrisiStruja] = useIzbrisiStrujaMutation()
+
+  const handleDelete = async (id) => {
+    const MySwal = withReactContent(Swal)
+    const confirm = await MySwal.fire({
+      title: 'Jeste li sigurni?',
+      text: 'Želite obrisati račun?',
+      icon: 'warning',
+      showDenyButton: true,
+      confirmButtonText: 'Da',
+      denyButtonText: 'Ne',
+      customClass: { htmlContainer: 'grid-row:1' },
+    })
+    if (confirm.isConfirmed) {
+      Swal.fire('Račun obrisan!', '', 'success')
+      izbrisiStruja({ id })
+    } else {
+      Swal.fire('Račun nije obrisan.', '', 'info')
+    }
+  }
 
   let rb = 1
   return (
@@ -35,7 +60,10 @@ const Struja = () => {
                   <button className='btn btn-info btn-sm'>
                     <BsFillPencilFill />
                   </button>
-                  <button className='btn btn-error btn-sm'>
+                  <button
+                    className='btn btn-error btn-sm'
+                    onClick={() => handleDelete(struja._id)}
+                  >
                     <BsFillTrashFill />
                   </button>
                 </td>

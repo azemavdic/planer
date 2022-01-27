@@ -18,7 +18,7 @@ const Forma = () => {
 
   const isEditingSelector = useSelector((state) => state.edit.value)
 
-  const [dodajStruja] = useDodajStrujaMutation()
+  const [dodajStruja, { isLoading }] = useDodajStrujaMutation()
 
   const handleChange = (e) => {
     const name = e.target.name
@@ -35,6 +35,13 @@ const Forma = () => {
     e.preventDefault()
     if (formData.iznos === null || formData.mjesec === '') {
       setGreska('Popunite sva polja')
+      setTimeout(() => {
+        setGreska(false)
+      }, 3000)
+      return
+    }
+    if (formData.iznos <= 0) {
+      setGreska('Iznos mora biti veći od 0')
       setTimeout(() => {
         setGreska(false)
       }, 3000)
@@ -110,7 +117,7 @@ const Forma = () => {
           </button>
         ) : (
           <button
-            // disabled={referenca === 'mama' ? isLoadingMama : isLoadingPosao}
+            disabled={isLoading}
             className='btn btn-wide disabled:bg-gray-200 disabled:loading'
           >
             Potvrdi

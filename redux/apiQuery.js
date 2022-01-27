@@ -108,11 +108,18 @@ export const api = createApi({
             ]
           : [{ type: 'Struja', id: 'LIST' }],
     }),
-    DodajStruja: build.mutation({
+    dodajStruja: build.mutation({
       query: (body) => ({
         url: 'racun/struja',
         method: 'POST',
         body,
+      }),
+      invalidatesTags: [{ type: 'Struja', id: 'LIST' }],
+    }),
+    izbrisiStruja: build.mutation({
+      query: ({ id }) => ({
+        url: `racun/struja/${id}`,
+        method: 'DELETE',
       }),
       invalidatesTags: [{ type: 'Struja', id: 'LIST' }],
     }),
@@ -142,5 +149,6 @@ export const {
   useUpdateMamaAktivnostMutation,
   useGetStrujaQuery,
   useDodajStrujaMutation,
+  useIzbrisiStrujaMutation,
   useGetVodaQuery,
 } = api
