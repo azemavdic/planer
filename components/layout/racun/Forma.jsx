@@ -2,10 +2,14 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import { useFocus } from '../../../hooks/useFocus'
-import { useDodajStrujaMutation } from '../../../redux/apiQuery'
+import {
+  useDodajStrujaMutation,
+  useUpdateStrujaMutation,
+} from '../../../redux/apiQuery'
+import { isEditing } from '../../../redux/editingItemSlice'
 import { showModal } from '../../../redux/modalSlice'
 
-const Forma = () => {
+const Forma = ({ editedItem, setEditedItem }) => {
   const [formData, setFormData] = useState({
     iznos: 0,
     mjesec: '',
@@ -19,6 +23,10 @@ const Forma = () => {
   const isEditingSelector = useSelector((state) => state.edit.value)
 
   const [dodajStruja, { isLoading }] = useDodajStrujaMutation()
+  const [updateStruja, { isLoading: isLoadingStrujaEdit }] =
+    useUpdateStrujaMutation({
+      fixedCacheKey: 'shared-update-post',
+    })
 
   const handleChange = (e) => {
     const name = e.target.name
@@ -29,6 +37,15 @@ const Forma = () => {
         [name]: value,
       }
     })
+  }
+
+  const handleChangeEditItem = (e) => {
+    const name = e.target.name
+    const value = e.target.value
+    setEditedItem((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }))
   }
 
   const handleSubmit = (e) => {
@@ -51,11 +68,31 @@ const Forma = () => {
     dispatch(showModal(false))
   }
 
+  const handleEditSubmit = async (e) => {
+    e.preventDefault()
+    if (editedItem.iznos === null || editedItem.mjesec === '') {
+      setGreska('Popunite sva polja')
+      setTimeout(() => {
+        setGreska(false)
+      }, 3000)
+      return
+    }
+    const novaStruja = {
+      id: editedItem._id,
+      iznos: +editedItem?.iznos,
+      mjesec: editedItem?.mjesec,
+    }
+    await updateStruja(novaStruja).unwrap()
+
+    dispatch(isEditing(false))
+    dispatch(showModal(false))
+  }
+
   return (
     <div className='w-full max-w-xs'>
       <form
         className='px-8 pt-6 pb-8 mt-4 mb-4 bg-white rounded-lg shadow-lg'
-        onSubmit={handleSubmit}
+        onSubmit={isEditingSelector ? handleEditSubmit : handleSubmit}
       >
         <div className='mb-4'>
           <label
@@ -108,9 +145,7 @@ const Forma = () => {
         </div>
         {isEditingSelector ? (
           <button
-            // disabled={
-            //   referenca === 'mama' ? isLoadingMamaEdit : isLoadingPosaoEdit
-            // }
+            disabled={isLoadingStrujaEdit}
             className='btn btn-wide disabled:bg-gray-200 disabled:loading'
           >
             Ispravi

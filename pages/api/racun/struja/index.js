@@ -8,7 +8,7 @@ export default async function (req, res) {
     case 'GET':
       try {
         const struja = await Struja.find({})
-        res.status(201).json({ uspjesno: true, struja })
+        res.status(200).json({ uspjesno: true, struja })
       } catch (error) {
         res.status(400).json({ uspjesno: false })
       }

@@ -123,6 +123,14 @@ export const api = createApi({
       }),
       invalidatesTags: [{ type: 'Struja', id: 'LIST' }],
     }),
+    updateStruja: build.mutation({
+      query: ({ id, ...rest }) => ({
+        url: `racun/struja/${id}`,
+        method: 'PUT',
+        body: rest,
+      }),
+      invalidatesTags: [{ type: 'Struja', id: 'LIST' }],
+    }),
     getVoda: build.query({
       query: () => 'racun/voda',
       providesTags: (result) =>
@@ -150,5 +158,6 @@ export const {
   useGetStrujaQuery,
   useDodajStrujaMutation,
   useIzbrisiStrujaMutation,
+  useUpdateStrujaMutation,
   useGetVodaQuery,
 } = api

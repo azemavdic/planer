@@ -9,11 +9,19 @@ import {
 import { BsFillTrashFill, BsFillPencilFill } from 'react-icons/bs'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import { showModal } from '../../redux/modalSlice'
+import { useDispatch } from 'react-redux'
+import { useState } from 'react'
+import { isEditing } from '../../redux/editingItemSlice'
+import Loading from '../../components/layout/Loading'
 
 const Struja = () => {
-  const router = useRouter()
+  const [editedItem, setEditedItem] = useState({})
 
-  const { data } = useGetStrujaQuery()
+  const router = useRouter()
+  const dispatch = useDispatch()
+
+  const { data, isLoading } = useGetStrujaQuery()
   const [izbrisiStruja] = useIzbrisiStrujaMutation()
 
   const handleDelete = async (id) => {
@@ -35,7 +43,14 @@ const Struja = () => {
     }
   }
 
+  const handleEditClick = (id) => {
+    dispatch(showModal(true))
+    dispatch(isEditing(true))
+    setEditedItem(data?.struja.find((struja) => struja._id === id))
+  }
+
   let rb = 1
+
   return (
     <div>
       <button className='btn btn-ghost' onClick={() => router.back()}>
@@ -51,13 +66,17 @@ const Struja = () => {
             <th>Akcije</th>
           </thead>
           <tbody className='text-center'>
+            {isLoading && <Loading item='badge' />}
             {data?.struja.map((struja) => (
               <tr key={struja?._id} className='border-b-[1px]'>
                 <td className='p-2'>{rb++}</td>
                 <td>{struja?.mjesec}</td>
                 <td>{struja?.iznos} KM</td>
                 <td className='space-x-2'>
-                  <button className='btn btn-info btn-sm'>
+                  <button
+                    className='btn btn-info btn-sm'
+                    onClick={() => handleEditClick(struja._id)}
+                  >
                     <BsFillPencilFill />
                   </button>
                   <button
@@ -74,7 +93,7 @@ const Struja = () => {
       </div>
       <DodajButton />
       <Modal>
-        <Forma />
+        <Forma editedItem={editedItem} setEditedItem={setEditedItem} />
       </Modal>
     </div>
   )

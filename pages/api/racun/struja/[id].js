@@ -3,7 +3,7 @@ import Struja from '../../../../models/Struja'
 
 export default async function (req, res) {
   await dbConnect()
-  const id = req.query.id
+  const { id } = req.query
 
   switch (req.method) {
     case 'DELETE':
@@ -19,7 +19,7 @@ export default async function (req, res) {
       break
     case 'PUT':
       try {
-        const struja = await Struja.findByIdAndUpdate(id, req.body, {
+        const struja = await Struja.findByIdAndUpdate({ _id: id }, req.body, {
           new: true,
           runValidators: true,
         })
@@ -28,7 +28,7 @@ export default async function (req, res) {
         }
         res.status(200).json({ uspjesno: true, struja })
       } catch (error) {
-        res.status(400).json({ uspjesno: false })
+        res.status(400).json({ uspjesno: false, poruka: error })
       }
       break
     default:

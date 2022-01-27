@@ -17,5 +17,4 @@ const StrujaSchema = new mongoose.Schema(
   },
   { timestamps: true }
 )
-
 export default mongoose.models.Struja || mongoose.model('Struja', StrujaSchema)
