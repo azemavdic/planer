@@ -1,8 +1,16 @@
 import { useRouter } from 'next/router'
+import { useGetStrujaQuery } from '../../../redux/api/strujaApi'
 
-const Card = ({ racun }) => {
+const Card = ({ racun, refs }) => {
   const router = useRouter()
   const { naziv, Ikona, path } = racun
+
+  const { strujaZadnji } = useGetStrujaQuery(undefined, {
+    selectFromResult: ({ data }) => ({
+      strujaZadnji: data?.struja[data?.struja.length - 1].mjesec,
+    }),
+  })
+
   return (
     <div
       onClick={() => router.push(path)}
@@ -13,8 +21,8 @@ const Card = ({ racun }) => {
         <p className='text-xl font-bold'>{naziv}</p>
       </div>
       <div className='flex items-center justify-between w-full mt-6'>
-        <p>Zadnji mjesec</p>
-        <p>Mart</p>
+        <i>Zadnji mjesec</i>
+        {refs === 'Struja' && <i>{strujaZadnji}</i>}
       </div>
     </div>
   )
