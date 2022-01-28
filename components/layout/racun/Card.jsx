@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 import { useGetStrujaQuery } from '../../../redux/api/strujaApi'
+import { useGetVodaQuery } from '../../../redux/api/vodaApi'
 
 const Card = ({ racun, refs }) => {
   const router = useRouter()
@@ -7,7 +8,16 @@ const Card = ({ racun, refs }) => {
 
   const { strujaZadnji } = useGetStrujaQuery(undefined, {
     selectFromResult: ({ data }) => ({
-      strujaZadnji: data?.struja[data?.struja.length - 1].mjesec,
+      strujaZadnji:
+        data?.struja.length > 0
+          ? data?.struja[data?.struja.length - 1].mjesec
+          : '',
+    }),
+  })
+  const { vodaZadnji } = useGetVodaQuery(undefined, {
+    selectFromResult: ({ data }) => ({
+      vodaZadnji:
+        data?.voda.length > 0 ? data?.voda[data?.voda.length - 1].mjesec : '',
     }),
   })
 
@@ -23,6 +33,7 @@ const Card = ({ racun, refs }) => {
       <div className='flex items-center justify-between w-full mt-6'>
         <i>Zadnji mjesec</i>
         {refs === 'Struja' && <i>{strujaZadnji}</i>}
+        {refs === 'Voda' && <i>{vodaZadnji}</i>}
       </div>
     </div>
   )

@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
@@ -6,6 +7,10 @@ import {
   useDodajStrujaMutation,
   useUpdateStrujaMutation,
 } from '../../../redux/api/strujaApi'
+import {
+  useDodajVodaMutation,
+  useUpdateVodaMutation,
+} from '../../../redux/api/vodaApi'
 import { isEditing } from '../../../redux/editingItemSlice'
 import { showModal } from '../../../redux/modalSlice'
 
@@ -14,19 +19,25 @@ const Forma = ({ editedItem, setEditedItem }) => {
     iznos: '',
     mjesec: '',
   })
-
   const [greska, setGreska] = useState(false)
+
+  const router = useRouter()
 
   const [inputRef, setInputFocus] = useFocus()
   const dispatch = useDispatch()
 
   const isEditingSelector = useSelector((state) => state.edit.value)
 
-  const [dodajStruja, { isLoading }] = useDodajStrujaMutation()
+  const [dodajStruja, { isLoading: isLoadingStrujaDodaj }] =
+    useDodajStrujaMutation()
   const [updateStruja, { isLoading: isLoadingStrujaEdit }] =
     useUpdateStrujaMutation({
       fixedCacheKey: 'shared-update-post',
     })
+  const [dodajVoda, { isLoading: isLoadingVodaDodaj }] = useDodajVodaMutation()
+  const [updateVoda, { isLoading: isLoadingVodaEdit }] = useUpdateVodaMutation({
+    fixedCacheKey: 'shared-update-post',
+  })
 
   const handleChange = (e) => {
     const name = e.target.name
@@ -64,7 +75,15 @@ const Forma = ({ editedItem, setEditedItem }) => {
       }, 3000)
       return
     }
-    dodajStruja(formData)
+    switch (router.pathname) {
+      case '/racuni/struja':
+        dodajStruja(formData)
+        break
+      case '/racuni/voda':
+        dodajVoda(formData)
+      default:
+        break
+    }
     dispatch(showModal(false))
   }
 
@@ -77,12 +96,28 @@ const Forma = ({ editedItem, setEditedItem }) => {
       }, 3000)
       return
     }
-    const novaStruja = {
+    if (editedItem.iznos <= 0) {
+      setGreska('Iznos mora biti veći od 0')
+      setTimeout(() => {
+        setGreska(false)
+      }, 3000)
+      return
+    }
+    const noviRacun = {
       id: editedItem._id,
       iznos: +editedItem?.iznos,
       mjesec: editedItem?.mjesec,
     }
-    await updateStruja(novaStruja).unwrap()
+
+    switch (router.pathname) {
+      case '/racuni/struja':
+        await updateStruja(noviRacun).unwrap()
+        break
+      case '/racuni/voda':
+        await updateVoda(noviRacun).unwrap()
+      default:
+        break
+    }
 
     dispatch(isEditing(false))
     dispatch(showModal(false))
@@ -152,7 +187,7 @@ const Forma = ({ editedItem, setEditedItem }) => {
           </button>
         ) : (
           <button
-            disabled={isLoading}
+            disabled={isLoadingStrujaDodaj}
             className='btn btn-wide disabled:bg-gray-200 disabled:loading'
           >
             Potvrdi

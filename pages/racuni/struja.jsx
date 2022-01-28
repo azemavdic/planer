@@ -22,7 +22,7 @@ const Struja = () => {
   const dispatch = useDispatch()
 
   const { data, isLoading } = useGetStrujaQuery()
-  const [izbrisiStruja] = useIzbrisiStrujaMutation()
+  const [izbrisiRacun] = useIzbrisiStrujaMutation()
 
   const handleDelete = async (id) => {
     const MySwal = withReactContent(Swal)
@@ -37,7 +37,7 @@ const Struja = () => {
     })
     if (confirm.isConfirmed) {
       Swal.fire('Račun obrisan!', '', 'success')
-      izbrisiStruja({ id })
+      izbrisiRacun({ id })
     } else {
       Swal.fire('Račun nije obrisan.', '', 'info')
     }
@@ -46,7 +46,7 @@ const Struja = () => {
   const handleEditClick = (id) => {
     dispatch(showModal(true))
     dispatch(isEditing(true))
-    setEditedItem(data?.struja.find((struja) => struja._id === id))
+    setEditedItem(data?.struja.find((racun) => racun._id === id))
   }
 
   let rb = 1
@@ -75,21 +75,21 @@ const Struja = () => {
                 </td>
               </tr>
             )}
-            {data?.struja.map((struja) => (
-              <tr key={struja?._id} className='border-b-[1px]'>
+            {data?.struja.map((racun) => (
+              <tr key={racun?._id} className='border-b-[1px]'>
                 <td className='p-2'>{rb++}</td>
-                <td>{struja?.mjesec}</td>
-                <td>{struja?.iznos} KM</td>
+                <td>{racun?.mjesec}</td>
+                <td>{racun?.iznos} KM</td>
                 <td className='space-x-2'>
                   <button
                     className='btn btn-info btn-sm'
-                    onClick={() => handleEditClick(struja._id)}
+                    onClick={() => handleEditClick(racun._id)}
                   >
                     <BsFillPencilFill />
                   </button>
                   <button
                     className='btn btn-error btn-sm'
-                    onClick={() => handleDelete(struja._id)}
+                    onClick={() => handleDelete(racun._id)}
                   >
                     <BsFillTrashFill />
                   </button>
