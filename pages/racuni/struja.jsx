@@ -3,9 +3,9 @@ import DodajButton from '../../components/layout/DodajButton'
 import Modal from '../../components/layout/Modal'
 import Forma from '../../components/layout/racun/Forma'
 import {
-  useGetStrujaQuery,
   useIzbrisiStrujaMutation,
-} from '../../redux/apiQuery'
+  useGetStrujaQuery,
+} from '../../redux/api/strujaApi'
 import { BsFillTrashFill, BsFillPencilFill } from 'react-icons/bs'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -52,7 +52,7 @@ const Struja = () => {
   let rb = 1
 
   return (
-    <div>
+    <>
       <button className='btn btn-ghost' onClick={() => router.back()}>
         Nazad
       </button>
@@ -60,13 +60,21 @@ const Struja = () => {
       <div className='w-full p-2 text-white rounded bg-slate-600'>
         <table className='w-full'>
           <thead className='border-b-2'>
-            <th>RB</th>
-            <th>Mjesec</th>
-            <th>Iznos</th>
-            <th>Akcije</th>
+            <tr>
+              <th>RB</th>
+              <th>Mjesec</th>
+              <th>Iznos</th>
+              <th>Akcije</th>
+            </tr>
           </thead>
           <tbody className='text-center'>
-            {isLoading && <Loading item='badge' />}
+            {isLoading && (
+              <tr>
+                <td>
+                  <Loading item='badge' />
+                </td>
+              </tr>
+            )}
             {data?.struja.map((struja) => (
               <tr key={struja?._id} className='border-b-[1px]'>
                 <td className='p-2'>{rb++}</td>
@@ -95,7 +103,7 @@ const Struja = () => {
       <Modal>
         <Forma editedItem={editedItem} setEditedItem={setEditedItem} />
       </Modal>
-    </div>
+    </>
   )
 }
 

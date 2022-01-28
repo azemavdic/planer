@@ -3,11 +3,13 @@ import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { useFocus } from '../../../hooks/useFocus'
 import {
-  useAddMamaAktivnostMutation,
   useAddPosaoMutation,
   useUpdatePosaoMutation,
+} from '../../../redux/api/posaoApi'
+import {
+  useAddMamaAktivnostMutation,
   useUpdateMamaAktivnostMutation,
-} from '../../../redux/apiQuery'
+} from '../../../redux/api/mamaApi'
 import { isEditing } from '../../../redux/editingItemSlice'
 import { showModal } from '../../../redux/modalSlice'
 

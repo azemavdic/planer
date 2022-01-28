@@ -1,9 +1,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import {
-  useGetAllMamaAktivnostiQuery,
-  useGetAllPosaoQuery,
-} from '../../redux/apiQuery'
+import { useGetAllMamaAktivnostiQuery } from '../../redux/api/mamaApi'
+import { useGetAllPosaoQuery } from '../../redux/api/posaoApi'
 
 const SidebarMeni = ({ meni }) => {
   const { Ikona, naziv, path } = meni

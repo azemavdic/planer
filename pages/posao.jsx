@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import Loading from '../components/layout/Loading'
 import AktivnostiForma from '../components/layout/aktivnosti/AktivnostiForma'
 import AktivnostiLista from '../components/layout/aktivnosti/AktivnostiLista'
-import { useGetAllPosaoQuery } from '../redux/apiQuery'
+import { useGetAllPosaoQuery } from '../redux/api/posaoApi'
 import DodajButton from '../components/layout/DodajButton'
 import Modal from '../components/layout/Modal'
 const { motion } = require('framer-motion')

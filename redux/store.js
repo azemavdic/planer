@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import racunReducer from './racunSlice'
-import { api } from './apiQuery'
+// import { api } from './apiQuery'
+import { emptySplitApi } from './api/emptySplitApi'
 import modalSlice from './modalSlice'
 import editingItemSlice from './editingItemSlice'
 
@@ -9,7 +10,7 @@ export const store = configureStore({
     racun: racunReducer,
     modal: modalSlice,
     edit: editingItemSlice,
-    [api.reducerPath]: api.reducer,
+    [emptySplitApi.reducerPath]: emptySplitApi.reducer,
   },
-  middleware: (gDM) => gDM().concat(api.middleware),
+  middleware: (gDM) => gDM().concat(emptySplitApi.middleware),
 })

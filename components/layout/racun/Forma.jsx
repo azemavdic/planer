@@ -5,13 +5,13 @@ import { useFocus } from '../../../hooks/useFocus'
 import {
   useDodajStrujaMutation,
   useUpdateStrujaMutation,
-} from '../../../redux/apiQuery'
+} from '../../../redux/api/strujaApi'
 import { isEditing } from '../../../redux/editingItemSlice'
 import { showModal } from '../../../redux/modalSlice'
 
 const Forma = ({ editedItem, setEditedItem }) => {
   const [formData, setFormData] = useState({
-    iznos: 0,
+    iznos: '',
     mjesec: '',
   })
 

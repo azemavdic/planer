@@ -1,8 +1,6 @@
 import Link from 'next/link'
-import {
-  useGetAllMamaAktivnostiQuery,
-  useGetAllPosaoQuery,
-} from '../../redux/apiQuery'
+import { useGetAllMamaAktivnostiQuery } from '../../redux/api/mamaApi'
+import { useGetAllPosaoQuery } from '../../redux/api/posaoApi'
 import Loading from '../layout/Loading'
 
 const PocetnaItem = ({ naziv, path }) => {
