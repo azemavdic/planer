@@ -15,6 +15,18 @@ import {
   useDodajSmeceMutation,
   useUpdateSmeceMutation,
 } from '../../../redux/api/smeceApi'
+import {
+  useDodajMobitelMutation,
+  useUpdateMobitelMutation,
+} from '../../../redux/api/mobitelApi'
+import {
+  useDodajKablovskaMutation,
+  useUpdateKablovskaMutation,
+} from '../../../redux/api/kablovskaApi'
+import {
+  useDodajIptvMutation,
+  useUpdateIptvMutation,
+} from '../../../redux/api/iptvApi'
 import { isEditing } from '../../../redux/editingItemSlice'
 import { showModal } from '../../../redux/modalSlice'
 
@@ -48,6 +60,22 @@ const Forma = ({ editedItem, setEditedItem }) => {
     useUpdateSmeceMutation({
       fixedCacheKey: 'shared-update-post',
     })
+  const [dodajMobitel, { isLoading: isLoadingMobitelDodaj }] =
+    useDodajMobitelMutation()
+  const [updateMobitel, { isLoading: isLoadingMobitelEdit }] =
+    useUpdateMobitelMutation({
+      fixedCacheKey: 'shared-update-post',
+    })
+  const [dodajKablovska, { isLoading: isLoadingKablovskaDodaj }] =
+    useDodajKablovskaMutation()
+  const [updateKablovska, { isLoading: isLoadingKablovskaEdit }] =
+    useUpdateKablovskaMutation({
+      fixedCacheKey: 'shared-update-post',
+    })
+  const [dodajIptv, { isLoading: isLoadingIptvDodaj }] = useDodajIptvMutation()
+  const [updateIptv, { isLoading: isLoadingIptvEdit }] = useUpdateIptvMutation({
+    fixedCacheKey: 'shared-update-post',
+  })
 
   const handleChange = (e) => {
     const name = e.target.name
@@ -91,8 +119,19 @@ const Forma = ({ editedItem, setEditedItem }) => {
         break
       case '/racuni/voda':
         dodajVoda(formData)
+        break
       case '/racuni/smece':
         dodajSmece(formData)
+        break
+      case '/racuni/mobitel':
+        dodajMobitel(formData)
+        break
+      case '/racuni/kablovska':
+        dodajKablovska(formData)
+        break
+      case '/racuni/iptv':
+        dodajIptv(formData)
+        break
       default:
         break
     }
@@ -130,6 +169,15 @@ const Forma = ({ editedItem, setEditedItem }) => {
         break
       case '/racuni/smece':
         await updateSmece(noviRacun).unwrap()
+        break
+      case '/racuni/mobitel':
+        await updateMobitel(noviRacun).unwrap()
+        break
+      case '/racuni/kablovska':
+        await updateKablovska(noviRacun).unwrap()
+        break
+      case '/racuni/iptv':
+        await updateIptv(noviRacun).unwrap()
         break
       default:
         break
