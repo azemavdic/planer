@@ -1,6 +1,10 @@
 import { useRouter } from 'next/router'
 import { useGetStrujaQuery } from '../../../redux/api/strujaApi'
 import { useGetVodaQuery } from '../../../redux/api/vodaApi'
+import { useGetSmeceQuery } from '../../../redux/api/smeceApi'
+import { useGetMobitelQuery } from '../../../redux/api/mobitelApi'
+import { useGetKablovskaQuery } from '../../../redux/api/kablovskaApi'
+import { useGetIptvQuery } from '../../../redux/api/iptvApi'
 
 const Card = ({ racun, refs }) => {
   const router = useRouter()
@@ -20,6 +24,36 @@ const Card = ({ racun, refs }) => {
         data?.voda.length > 0 ? data?.voda[data?.voda.length - 1].mjesec : '',
     }),
   })
+  const { smeceZadnji } = useGetSmeceQuery(undefined, {
+    selectFromResult: ({ data }) => ({
+      smeceZadnji:
+        data?.smece.length > 0
+          ? data?.smece[data?.smece.length - 1].mjesec
+          : '',
+    }),
+  })
+  const { mobitelZadnji } = useGetMobitelQuery(undefined, {
+    selectFromResult: ({ data }) => ({
+      mobitelZadnji:
+        data?.mobitel.length > 0
+          ? data?.mobitel[data?.mobitel.length - 1].mjesec
+          : '',
+    }),
+  })
+  const { kablovskaZadnji } = useGetKablovskaQuery(undefined, {
+    selectFromResult: ({ data }) => ({
+      kablovskaZadnji:
+        data?.kablovska.length > 0
+          ? data?.kablovska[data?.kablovska.length - 1].mjesec
+          : '',
+    }),
+  })
+  const { iptvZadnji } = useGetIptvQuery(undefined, {
+    selectFromResult: ({ data }) => ({
+      iptvZadnji:
+        data?.iptv.length > 0 ? data?.iptv[data?.iptv.length - 1].mjesec : '',
+    }),
+  })
 
   return (
     <div
@@ -34,6 +68,10 @@ const Card = ({ racun, refs }) => {
         <i>Zadnji mjesec</i>
         {refs === 'Struja' && <i>{strujaZadnji}</i>}
         {refs === 'Voda' && <i>{vodaZadnji}</i>}
+        {refs === 'Smece' && <i>{smeceZadnji}</i>}
+        {refs === 'Mobitel' && <i>{mobitelZadnji}</i>}
+        {refs === 'Kablovska' && <i>{kablovskaZadnji}</i>}
+        {refs === 'Iptv' && <i>{iptvZadnji}</i>}
       </div>
     </div>
   )
