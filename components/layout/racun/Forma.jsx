@@ -11,6 +11,10 @@ import {
   useDodajVodaMutation,
   useUpdateVodaMutation,
 } from '../../../redux/api/vodaApi'
+import {
+  useDodajSmeceMutation,
+  useUpdateSmeceMutation,
+} from '../../../redux/api/smeceApi'
 import { isEditing } from '../../../redux/editingItemSlice'
 import { showModal } from '../../../redux/modalSlice'
 
@@ -38,6 +42,12 @@ const Forma = ({ editedItem, setEditedItem }) => {
   const [updateVoda, { isLoading: isLoadingVodaEdit }] = useUpdateVodaMutation({
     fixedCacheKey: 'shared-update-post',
   })
+  const [dodajSmece, { isLoading: isLoadingSmeceDodaj }] =
+    useDodajSmeceMutation()
+  const [updateSmece, { isLoading: isLoadingSmeceEdit }] =
+    useUpdateSmeceMutation({
+      fixedCacheKey: 'shared-update-post',
+    })
 
   const handleChange = (e) => {
     const name = e.target.name
@@ -81,6 +91,8 @@ const Forma = ({ editedItem, setEditedItem }) => {
         break
       case '/racuni/voda':
         dodajVoda(formData)
+      case '/racuni/smece':
+        dodajSmece(formData)
       default:
         break
     }
@@ -115,6 +127,10 @@ const Forma = ({ editedItem, setEditedItem }) => {
         break
       case '/racuni/voda':
         await updateVoda(noviRacun).unwrap()
+        break
+      case '/racuni/smece':
+        await updateSmece(noviRacun).unwrap()
+        break
       default:
         break
     }
