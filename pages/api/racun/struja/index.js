@@ -1,5 +1,5 @@
 import dbConnect from '../../../../lib/mongodb'
-import Struja from '../../../../models/Struja'
+import Struja from '../../../../models/racuni/Struja'
 
 export default async function handler(req, res) {
   await dbConnect()

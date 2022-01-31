@@ -1,5 +1,5 @@
 import dbConnect from '../../../../lib/mongodb'
-import Kablovska from '../../../../models/Kablovska'
+import Kablovska from '../../../../models/racuni/Kablovska'
 
 export default async function handler(req, res) {
   await dbConnect()

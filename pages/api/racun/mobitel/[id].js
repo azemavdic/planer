@@ -1,5 +1,5 @@
 import dbConnect from '../../../../lib/mongodb'
-import Mobitel from '../../../../models/Mobitel'
+import Mobitel from '../../../../models/racuni/Mobitel'
 
 export default async function handler(req, res) {
   await dbConnect()

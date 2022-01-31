@@ -1,5 +1,5 @@
 import dbConnect from '../../../../lib/mongodb'
-import Smece from '../../../../models/Smece'
+import Smece from '../../../../models/racuni/Smece'
 
 export default async function handler(req, res) {
   await dbConnect()

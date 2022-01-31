@@ -1,5 +1,5 @@
 import dbConnect from '../../../../lib/mongodb'
-import Voda from '../../../../models/Voda'
+import Voda from '../../../../models/racuni/Voda'
 
 export default async function handler(req, res) {
   await dbConnect()

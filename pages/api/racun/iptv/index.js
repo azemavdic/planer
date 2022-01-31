@@ -1,5 +1,5 @@
 import dbConnect from '../../../../lib/mongodb'
-import Iptv from '../../../../models/Iptv'
+import Iptv from '../../../../models/racuni/Iptv'
 
 export default async function handler(req, res) {
   await dbConnect()
