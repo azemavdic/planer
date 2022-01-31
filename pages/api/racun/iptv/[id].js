@@ -1,7 +1,7 @@
 import dbConnect from '../../../../lib/mongodb'
 import Iptv from '../../../../models/Iptv'
 
-export default async function (req, res) {
+export default async function handler(req, res) {
   await dbConnect()
   const { id } = req.query
 

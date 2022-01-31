@@ -1,7 +1,7 @@
 import dbConnect from '../../../lib/mongodb'
 import Posao from '../../../models/Posao'
 
-export default async function (req, res) {
+export default async function handler(req, res) {
   await dbConnect()
 
   switch (req.method) {
