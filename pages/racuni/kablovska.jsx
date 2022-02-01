@@ -14,6 +14,7 @@ import { useDispatch } from 'react-redux'
 import { useState } from 'react'
 import { isEditing } from '../../redux/editingItemSlice'
 import Loading from '../../components/layout/Loading'
+import Layout from '../../components/layout/Layout'
 
 const Kablovska = () => {
   const [editedItem, setEditedItem] = useState({})
@@ -52,10 +53,7 @@ const Kablovska = () => {
   let rb = 1
 
   return (
-    <>
-      <button className='btn btn-ghost' onClick={() => router.back()}>
-        Nazad
-      </button>
+    <Layout>
       <h2 className='mb-5 text-lg font-bold'>Kablovska</h2>
       <div className='w-full p-2 text-white rounded bg-slate-600'>
         <table className='w-full'>
@@ -103,7 +101,7 @@ const Kablovska = () => {
       <Modal>
         <Forma editedItem={editedItem} setEditedItem={setEditedItem} />
       </Modal>
-    </>
+    </Layout>
   )
 }
 

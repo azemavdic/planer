@@ -6,6 +6,7 @@ import AktivnostiLista from '../components/layout/aktivnosti/AktivnostiLista'
 import { useGetAllPosaoQuery } from '../redux/api/posaoApi'
 import DodajButton from '../components/layout/DodajButton'
 import Modal from '../components/layout/Modal'
+import Layout from '../components/layout/Layout'
 const { motion } = require('framer-motion')
 const Posao = () => {
   const [posaoState, setPosaoState] = useState(null)
@@ -49,78 +50,80 @@ const Posao = () => {
   }
 
   return (
-    <div className='relative'>
-      <Head>
-        <title>Planer - Posao</title>
-      </Head>
-      <div className='flex items-center justify-center mt-5 space-x-4'>
-        <p className={styleBadgeNezavrsen} onClick={filterNezavrseni}>
-          Nezavršene: <span className='ml-2'>{posaoNezavrsen?.length}</span>
-        </p>
-        <p className={styleBadgeZavrsen} onClick={filterZavrseni}>
-          Završene: <span className='ml-2'>{posaoZavrsen?.length}</span>
-        </p>
-        {filterActive && (
-          <p
-            className='p-3 text-center cursor-pointer badge'
-            onClick={ocistiFilter}
-          >
-            Očisti
+    <Layout>
+      <div className='relative'>
+        <Head>
+          <title>Planer - Posao</title>
+        </Head>
+        <div className='flex items-center justify-center mt-5 space-x-4'>
+          <p className={styleBadgeNezavrsen} onClick={filterNezavrseni}>
+            Nezavršene: <span className='ml-2'>{posaoNezavrsen?.length}</span>
           </p>
-        )}
-      </div>
-      <div className='flex items-center justify-center gap-4 mt-5'>
-        <div className='w-full lg:w-9/12'>
-          <h3 className='text-xl font-bold'>Pregled aktivnosti</h3>
-          {data?.posao.length === 0 ? (
-            <div className='flex items-center justify-center h-[25rem]'>
-              <p>Nema aktivnosti za prikazati.</p>
-            </div>
-          ) : isLoading ? (
-            <div className='flex items-center justify-center h-[25rem]'>
-              <Loading />
-            </div>
-          ) : (
-            <div className='p-4 w-full overflow-y-visible overflow-x-auto bg-white shadow-lg h-[25rem] mt-4 rounded-lg'>
-              {posaoState?.map((posao) => (
-                <motion.div
-                  key={posao._id}
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                >
-                  <AktivnostiLista
-                    key={posao._id}
-                    id={posao._id}
-                    data={posao}
-                    referenca='posao'
-                    isEditing={isEditing}
-                    setIsEditing={setIsEditing}
-                    editedItem={editedItem}
-                    setEditedItem={setEditedItem}
-                  />
-                </motion.div>
-              ))}
-            </div>
+          <p className={styleBadgeZavrsen} onClick={filterZavrseni}>
+            Završene: <span className='ml-2'>{posaoZavrsen?.length}</span>
+          </p>
+          {filterActive && (
+            <p
+              className='p-3 text-center cursor-pointer badge'
+              onClick={ocistiFilter}
+            >
+              Očisti
+            </p>
           )}
         </div>
+        <div className='flex items-center justify-center gap-4 mt-5'>
+          <div className='w-full lg:w-9/12'>
+            <h3 className='text-xl font-bold'>Pregled aktivnosti</h3>
+            {data?.posao.length === 0 ? (
+              <div className='flex items-center justify-center h-[25rem]'>
+                <p>Nema aktivnosti za prikazati.</p>
+              </div>
+            ) : isLoading ? (
+              <div className='flex items-center justify-center h-[25rem]'>
+                <Loading />
+              </div>
+            ) : (
+              <div className='p-4 w-full overflow-y-visible overflow-x-auto bg-white shadow-lg h-[25rem] mt-4 rounded-lg'>
+                {posaoState?.map((posao) => (
+                  <motion.div
+                    key={posao._id}
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                  >
+                    <AktivnostiLista
+                      key={posao._id}
+                      id={posao._id}
+                      data={posao}
+                      referenca='posao'
+                      isEditing={isEditing}
+                      setIsEditing={setIsEditing}
+                      editedItem={editedItem}
+                      setEditedItem={setEditedItem}
+                    />
+                  </motion.div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+        <DodajButton />
+        <Modal setIsEditing={setIsEditing}>
+          <motion.div
+            initial={{ y: '-100%' }}
+            animate={{ x: 0, y: 0 }}
+            className='flex items-center justify-center'
+          >
+            <AktivnostiForma
+              isEditing={isEditing}
+              setIsEditing={setIsEditing}
+              editedItem={editedItem}
+              setEditedItem={setEditedItem}
+            />
+          </motion.div>
+        </Modal>
       </div>
-      <DodajButton />
-      <Modal setIsEditing={setIsEditing}>
-        <motion.div
-          initial={{ y: '-100%' }}
-          animate={{ x: 0, y: 0 }}
-          className='flex items-center justify-center'
-        >
-          <AktivnostiForma
-            isEditing={isEditing}
-            setIsEditing={setIsEditing}
-            editedItem={editedItem}
-            setEditedItem={setEditedItem}
-          />
-        </motion.div>
-      </Modal>
-    </div>
+    </Layout>
   )
 }
 

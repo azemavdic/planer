@@ -1,13 +1,16 @@
 import Head from 'next/head'
+import Layout from '../components/layout/Layout'
 
 const Kuca = () => {
   return (
-    <div>
-      <Head>
-        <title>Planer - Kuća</title>
-      </Head>
-      Kuća
-    </div>
+    <Layout>
+      <div>
+        <Head>
+          <title>Planer - Kuća</title>
+        </Head>
+        Kuća
+      </div>
+    </Layout>
   )
 }
 
