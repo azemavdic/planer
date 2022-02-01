@@ -1,12 +1,63 @@
+import Head from 'next/head'
 import Link from 'next/link'
+import { useRef } from 'react'
+
+const createUser = async (ime, email, sifra) => {
+  const res = await fetch('/api/auth/registracija', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      ime,
+      email,
+      sifra,
+    }),
+  })
+
+  const data = await res.json()
+
+  if (!res.ok) {
+    throw new Error(data.poruka || 'Nešto je pošlo u krivu.')
+  }
+  return data
+}
 
 const Registracija = () => {
+  const imeRef = useRef()
+  const emailRef = useRef()
+  const sifraRef = useRef()
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const enteredIme = imeRef.current.value
+    const enteredEmail = emailRef.current.value
+    const enteredSifra = sifraRef.current.value
+
+    if (!enteredIme || !enteredEmail || !enteredSifra) {
+      console.log('Molimo popunite sva polja')
+      return
+    }
+    try {
+      const result = await createUser(enteredIme, enteredEmail, enteredSifra)
+      console.log(result)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div className='h-screen font-sans login bg-cover'>
+      <Head>
+        <title>Registracija</title>
+      </Head>
       <div className='container mx-auto h-full flex flex-1 justify-center items-center'>
         <div className='w-full max-w-lg'>
           <div className='leading-loose'>
-            <form className='max-w-sm m-4 p-10 bg-white bg-opacity-25 rounded shadow-xl'>
+            <form
+              onSubmit={handleSubmit}
+              className='max-w-sm m-4 p-10 bg-white bg-opacity-25 rounded shadow-xl'
+            >
               <p className='text-white font-medium text-center text-lg'>
                 REGISTRACIJA
               </p>
@@ -20,6 +71,7 @@ const Registracija = () => {
                   placeholder='Upišite ime'
                   aria-label='ime'
                   required
+                  ref={imeRef}
                 />
               </div>
               <div className='mt-2'>
@@ -33,6 +85,7 @@ const Registracija = () => {
                   placeholder='Upišite email'
                   aria-label='email'
                   required
+                  ref={emailRef}
                 />
               </div>
               <div className='mt-2'>
@@ -44,6 +97,7 @@ const Registracija = () => {
                   placeholder='Upišite šifru'
                   arial-label='password'
                   required
+                  ref={sifraRef}
                 />
               </div>
 
