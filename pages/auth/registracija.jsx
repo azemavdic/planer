@@ -2,7 +2,7 @@ import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 
 const createUser = async (ime, email, sifra) => {
   const res = await fetch('/api/auth/registracija', {
@@ -26,6 +26,7 @@ const createUser = async (ime, email, sifra) => {
 }
 
 const Registracija = () => {
+  const [loading, setLoading] = useState(false)
   const imeRef = useRef()
   const emailRef = useRef()
   const sifraRef = useRef()
@@ -35,11 +36,12 @@ const Registracija = () => {
   const { data: session, status } = useSession()
 
   if (session) {
-    router.back()
+    router.push('/')
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setLoading(true)
     const enteredIme = imeRef.current.value
     const enteredEmail = emailRef.current.value
     const enteredSifra = sifraRef.current.value
@@ -51,8 +53,11 @@ const Registracija = () => {
     try {
       const result = await createUser(enteredIme, enteredEmail, enteredSifra)
       console.log(result)
+      router.push('/auth/prijava')
+      setLoading(false)
     } catch (error) {
       console.log(error)
+      setLoading(false)
     }
   }
 
@@ -113,8 +118,9 @@ const Registracija = () => {
 
               <div className='mt-4 items-center flex justify-between'>
                 <button
-                  className='px-4 py-1 text-white font-light tracking-wider bg-gray-900 hover:bg-gray-800 rounded'
+                  className=' disabled:loading btn disabled:bg-gray-200px-4 py-1 text-white font-light tracking-wider bg-gray-900 hover:bg-gray-800 rounded'
                   type='submit'
+                  disabled={loading}
                 >
                   Registracija
                 </button>

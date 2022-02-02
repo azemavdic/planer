@@ -21,7 +21,7 @@ const SidebarMeni = ({ meni }) => {
 
   const { mamaNezavrsen } = useGetAllMamaAktivnostiQuery(undefined, {
     selectFromResult: ({ data }) => ({
-      mamaNezavrsen: data?.mama.filter((mama) => mama?.zavrsen === false),
+      mamaNezavrsen: data?.user?.mama.filter((mama) => mama?.zavrsen === false),
     }),
   })
 

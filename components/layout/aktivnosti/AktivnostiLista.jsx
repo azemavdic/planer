@@ -39,7 +39,7 @@ const AktivnostiLista = ({ data, id, referenca, setEditedItem }) => {
   })
   const { mamaToggle } = useGetAllMamaAktivnostiQuery(undefined, {
     selectFromResult: ({ data }) => ({
-      mamaToggle: data?.mama.find((mama) => mama._id === id),
+      mamaToggle: data?.user?.mama.find((mama) => mama._id === id),
     }),
   })
   const [izbrisiPosao] = useIzbrisiPosaoMutation()

@@ -13,7 +13,9 @@ const PocetnaItem = ({ naziv, path }) => {
     undefined,
     {
       selectFromResult: ({ data, isLoading }) => ({
-        mamaNezavrsen: data?.mama.filter((mama) => mama?.zavrsen === false),
+        mamaNezavrsen: data?.user?.mama.filter(
+          (mama) => mama?.zavrsen === false
+        ),
         mamaLoading: isLoading,
       }),
     }

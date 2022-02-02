@@ -16,20 +16,22 @@ const Mama = ({ user }) => {
   const [filterActive, setfilterActive] = useState(false)
   const [editedItem, setEditedItem] = useState({})
 
-  const { data, isError, isLoading } = useGetAllMamaAktivnostiQuery()
+  const { data, isError, isLoading, refetch } = useGetAllMamaAktivnostiQuery()
 
   useEffect(() => {
-    setmamaState(data?.mama)
+    setmamaState(data?.user?.mama)
   }, [data])
 
   const { mamaAktZavrsena } = useGetAllMamaAktivnostiQuery(undefined, {
     selectFromResult: ({ data }) => ({
-      mamaAktZavrsena: data?.mama.filter((mama) => mama?.zavrsen),
+      mamaAktZavrsena: data?.user?.mama.filter((mama) => mama?.zavrsen),
     }),
   })
   const { mamaAktNezavrsena } = useGetAllMamaAktivnostiQuery(undefined, {
     selectFromResult: ({ data }) => ({
-      mamaAktNezavrsena: data?.mama.filter((mama) => mama?.zavrsen === false),
+      mamaAktNezavrsena: data?.user?.mama.filter(
+        (mama) => mama?.zavrsen === false
+      ),
     }),
   })
 
@@ -47,7 +49,7 @@ const Mama = ({ user }) => {
   }
 
   const ocistiFilter = () => {
-    setmamaState(data?.mama)
+    setmamaState(data?.user?.mama)
     setfilterActive(false)
   }
 
@@ -77,7 +79,7 @@ const Mama = ({ user }) => {
         <div className='flex items-center justify-center gap-4 mt-5'>
           <div className='w-full lg:w-9/12'>
             <h3 className='text-xl font-bold'>Pregled aktivnosti</h3>
-            {data?.mama.length === 0 ? (
+            {data?.user?.mama.length === 0 ? (
               <div className='flex items-center justify-center h-[25rem]'>
                 <p>Nema aktivnosti za prikazati.</p>
               </div>
@@ -130,7 +132,7 @@ const Mama = ({ user }) => {
 
 export async function getServerSideProps(ctx) {
   const session = await getSession(ctx)
-  const email = session.user.email
+  const email = session?.user?.email
 
   await dbConnect()
   const userData = await User.findOne({ email: email })

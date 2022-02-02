@@ -6,13 +6,11 @@ import { getSession } from 'next-auth/react'
 import Loading from '../components/layout/Loading'
 import Link from 'next/link'
 import { useEffect } from 'react'
+import dbConnect from '../lib/mongodb'
+import User from '../models/korisnici/User'
 
-export default function Home() {
-  useEffect(() => {
-    getSession().then((credentials) => {
-      console.log(credentials)
-    })
-  }, [])
+export default function Home({ user }) {
+  const ime = user?.ime.charAt(0).toUpperCase() + user?.ime.slice(1)
   return (
     <Layout>
       <div>
@@ -20,7 +18,7 @@ export default function Home() {
           <title>Planer Asko 2022</title>
         </Head>
         <h2 className='text-xl font-bold text-center p-4'>
-          Dobrodošli u Planer
+          Dobrodošli u Planer, {ime}.
         </h2>
         <main>
           {pocetnaData.map((data) => (
@@ -30,6 +28,20 @@ export default function Home() {
       </div>
     </Layout>
   )
+}
+
+export async function getServerSideProps(ctx) {
+  const session = await getSession(ctx)
+  const email = session?.user?.email
+
+  await dbConnect()
+
+  const userData = await User.findOne({ email })
+  const user = JSON.parse(JSON.stringify(userData))
+
+  return {
+    props: { user },
+  }
 }
 
 Home.auth = true

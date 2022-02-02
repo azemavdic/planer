@@ -67,12 +67,12 @@ const AktivnostiForma = ({ referenca, editedItem, setEditedItem, user }) => {
       }, 3000)
       return
     }
-    setFormData({ naziv: '', opis: '', zavrsen: false })
     if (referenca === 'mama') {
       await dodajMamaAktivnost(formData).unwrap()
     } else {
       await dodajPosao(formData).unwrap()
     }
+    setFormData({ naziv: '', opis: '', zavrsen: false })
     setInputFocus()
     dispatch(showModal(false))
   }

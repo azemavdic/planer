@@ -1,22 +1,27 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { getSession, signIn, useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import Loading from '../../components/layout/Loading'
+import { useGetAllMamaAktivnostiQuery } from '../../redux/api/mamaApi'
 
 const Prijava = () => {
+  const [loading, setLoading] = useState(false)
   const emailRef = useRef()
   const sifraRef = useRef()
   const router = useRouter()
   const { data: session, status } = useSession()
 
+  const { refetch } = useGetAllMamaAktivnostiQuery()
+
   if (session) {
-    router.back()
+    router.push('/')
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setLoading(true)
     const enteredEmail = emailRef.current.value
     const enteredSifra = sifraRef.current.value
 
@@ -24,12 +29,18 @@ const Prijava = () => {
       console.log('Molimo popunite sva polja')
       return
     }
-    const res = await signIn('credentials', {
-      email: enteredEmail,
-      sifra: enteredSifra,
-      redirect: false,
-    })
-    router.back()
+    try {
+      const res = await signIn('credentials', {
+        email: enteredEmail,
+        sifra: enteredSifra,
+        redirect: false,
+      })
+      refetch()
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+      setLoading(false)
+    }
   }
 
   return (
@@ -76,8 +87,9 @@ const Prijava = () => {
 
               <div className='mt-4 items-center flex justify-between'>
                 <button
-                  className='px-4 py-1 text-white font-light tracking-wider bg-gray-900 hover:bg-gray-800 rounded'
+                  className='disabled:loading btn disabled:bg-gray-200 px-4 py-1 text-white font-light tracking-wider bg-gray-900 hover:bg-gray-800 rounded'
                   type='submit'
+                  disabled={loading}
                 >
                   Prijava
                 </button>
