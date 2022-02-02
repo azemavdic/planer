@@ -22,3 +22,4 @@ const Racuni = () => {
 }
 
 export default Racuni
+Racuni.auth = true

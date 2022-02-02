@@ -1,5 +1,7 @@
+import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useRef } from 'react'
 
 const createUser = async (ime, email, sifra) => {
@@ -27,6 +29,14 @@ const Registracija = () => {
   const imeRef = useRef()
   const emailRef = useRef()
   const sifraRef = useRef()
+
+  const router = useRouter()
+
+  const { data: session, status } = useSession()
+
+  if (session) {
+    router.back()
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()

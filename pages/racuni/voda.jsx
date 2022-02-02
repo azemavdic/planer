@@ -106,3 +106,4 @@ const Voda = () => {
 }
 
 export default Voda
+Voda.auth = true

@@ -128,3 +128,5 @@ const Posao = () => {
 }
 
 export default Posao
+
+Posao.auth = true

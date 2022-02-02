@@ -106,3 +106,4 @@ const Iptv = () => {
 }
 
 export default Iptv
+Iptv.auth = true

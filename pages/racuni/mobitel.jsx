@@ -106,3 +106,4 @@ const Mobitel = () => {
 }
 
 export default Mobitel
+Mobitel.auth = true

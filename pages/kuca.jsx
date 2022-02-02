@@ -15,3 +15,5 @@ const Kuca = () => {
 }
 
 export default Kuca
+
+Kuca.auth = true

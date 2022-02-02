@@ -7,8 +7,11 @@ import { useGetAllMamaAktivnostiQuery } from '../redux/api/mamaApi'
 import DodajButton from '../components/layout/DodajButton'
 import Modal from '../components/layout/Modal'
 import Layout from '../components/layout/Layout'
+import dbConnect from '../lib/mongodb'
+import { getSession } from 'next-auth/react'
+import User from '../models/korisnici/User'
 const { motion } = require('framer-motion')
-const Mama = () => {
+const Mama = ({ user }) => {
   const [mamaState, setmamaState] = useState(null)
   const [filterActive, setfilterActive] = useState(false)
   const [editedItem, setEditedItem] = useState({})
@@ -116,6 +119,7 @@ const Mama = () => {
               editedItem={editedItem}
               setEditedItem={setEditedItem}
               referenca='mama'
+              user={user}
             />
           </motion.div>
         </Modal>
@@ -124,4 +128,19 @@ const Mama = () => {
   )
 }
 
+export async function getServerSideProps(ctx) {
+  const session = await getSession(ctx)
+  const email = session.user.email
+
+  await dbConnect()
+  const userData = await User.findOne({ email: email })
+  const user = JSON.parse(JSON.stringify(userData))
+
+  return {
+    props: { user },
+  }
+}
+
 export default Mama
+
+Mama.auth = true

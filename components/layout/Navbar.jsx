@@ -5,9 +5,14 @@ import { RiParentFill, RiBillFill } from 'react-icons/ri'
 import { MdWork } from 'react-icons/md'
 import Link from 'next/link'
 import Image from 'next/image'
+import { signOut } from 'next-auth/react'
 
 const Navbar = () => {
   const router = useRouter()
+  const handleLogout = async () => {
+    await signOut({ redirect: false })
+    router.push('/auth/prijava')
+  }
 
   return (
     <div className='mb-2 shadow-lg navbar bg-neutral text-neutral-content rounded-box'>
@@ -35,6 +40,9 @@ const Navbar = () => {
           />
         </div>
       </div>
+      <button className='btn btn-ghost btn-sm' onClick={handleLogout}>
+        Odjava
+      </button>
       <div className='flex-none'>
         <div className='avatar'>
           <div className='w-10 h-10 m-1 rounded-full'>

@@ -13,11 +13,12 @@ import {
 import { isEditing } from '../../../redux/editingItemSlice'
 import { showModal } from '../../../redux/modalSlice'
 
-const AktivnostiForma = ({ referenca, editedItem, setEditedItem }) => {
+const AktivnostiForma = ({ referenca, editedItem, setEditedItem, user }) => {
   const [formData, setFormData] = useState({
     naziv: '',
     opis: '',
     zavrsen: false,
+    user,
   })
   const [greska, setGreska] = useState(null)
   const isEditingSelector = useSelector((state) => state.edit.value)

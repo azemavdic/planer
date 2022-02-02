@@ -1,11 +1,19 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRef } from 'react'
+import { getSession, signIn, useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
+import Loading from '../../components/layout/Loading'
 
 const Prijava = () => {
-  const imeRef = useRef()
   const emailRef = useRef()
   const sifraRef = useRef()
+  const router = useRouter()
+  const { data: session, status } = useSession()
+
+  if (session) {
+    router.back()
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -16,6 +24,12 @@ const Prijava = () => {
       console.log('Molimo popunite sva polja')
       return
     }
+    const res = await signIn('credentials', {
+      email: enteredEmail,
+      sifra: enteredSifra,
+      redirect: false,
+    })
+    router.back()
   }
 
   return (

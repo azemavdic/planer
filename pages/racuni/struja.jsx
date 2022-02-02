@@ -106,3 +106,4 @@ const Struja = () => {
 }
 
 export default Struja
+Struja.auth = true

@@ -106,3 +106,4 @@ const Kablovska = () => {
 }
 
 export default Kablovska
+Kablovska.auth = true

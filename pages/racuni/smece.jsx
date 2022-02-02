@@ -106,3 +106,4 @@ const Smece = () => {
 }
 
 export default Smece
+Smece.auth = true

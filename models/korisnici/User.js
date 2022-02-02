@@ -12,12 +12,14 @@ const UserSchema = Schema(
   },
   {
     timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   }
 )
 
 UserSchema.virtual('mama', {
   ref: 'Mama',
-  localField: '_id',
+  localField: 'email',
   foreignField: 'user',
 })
 

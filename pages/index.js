@@ -2,8 +2,17 @@ import Head from 'next/head'
 import PocetnaItem from '../components/pocetna/PocetnaItem'
 import { pocetnaData } from '../data/pocetna'
 import Layout from '../components/layout/Layout'
+import { getSession } from 'next-auth/react'
+import Loading from '../components/layout/Loading'
+import Link from 'next/link'
+import { useEffect } from 'react'
 
 export default function Home() {
+  useEffect(() => {
+    getSession().then((credentials) => {
+      console.log(credentials)
+    })
+  }, [])
   return (
     <Layout>
       <div>
@@ -22,3 +31,5 @@ export default function Home() {
     </Layout>
   )
 }
+
+Home.auth = true
