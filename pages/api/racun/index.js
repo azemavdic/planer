@@ -1,5 +1,5 @@
 import dbConnect from '../../../lib/mongodb'
-import Racun from '../../../models/Racun'
+import Racun from '../../../models/racuni/Racun'
 
 export default async function handler(req, res) {
   await dbConnect()
