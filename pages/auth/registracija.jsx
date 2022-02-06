@@ -27,6 +27,7 @@ const createUser = async (ime, email, sifra) => {
 
 const Registracija = () => {
   const [loading, setLoading] = useState(false)
+  const [greska, setGreska] = useState(null)
   const imeRef = useRef()
   const emailRef = useRef()
   const sifraRef = useRef()
@@ -56,7 +57,7 @@ const Registracija = () => {
       router.push('/auth/prijava')
       setLoading(false)
     } catch (error) {
-      console.log(error)
+      setGreska(error.message)
       setLoading(false)
     }
   }
@@ -130,6 +131,7 @@ const Registracija = () => {
                   </a>
                 </Link>
               </div>
+              {greska && <span className='text-red-400'>{greska}</span>}
             </form>
           </div>
         </div>

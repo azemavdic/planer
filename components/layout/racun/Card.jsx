@@ -71,7 +71,7 @@ const Card = ({ racun, refs }) => {
         {refs === 'Smece' && <i>{smeceZadnji}</i>}
         {refs === 'Mobitel' && <i>{mobitelZadnji}</i>}
         {refs === 'Kablovska' && <i>{kablovskaZadnji}</i>}
-        {refs === 'Iptv' && <i>{iptvZadnji}</i>}
+        {refs === 'IPTV' && <i>{iptvZadnji}</i>}
       </div>
     </div>
   )

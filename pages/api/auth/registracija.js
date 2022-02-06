@@ -14,7 +14,7 @@ export default async function handler(req, res) {
         }
         const postojeciKorisnik = await User.findOne({ email: email })
         if (postojeciKorisnik) {
-          res.status(422).json({ poruka: 'Korisnik već postoji' })
+          res.status(422).json({ poruka: 'Korisnik već postoji.' })
           return
         }
 

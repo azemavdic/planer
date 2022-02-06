@@ -8,6 +8,7 @@ import { useGetAllMamaAktivnostiQuery } from '../../redux/api/mamaApi'
 
 const Prijava = () => {
   const [loading, setLoading] = useState(false)
+  const [greska, setGreska] = useState(null)
   const emailRef = useRef()
   const sifraRef = useRef()
   const router = useRouter()
@@ -38,26 +39,28 @@ const Prijava = () => {
       refetch()
       setLoading(false)
     } catch (error) {
-      console.log(error)
+      setGreska(error.message)
+      console.log(error.message)
       setLoading(false)
     }
   }
 
   return (
-    <div className='h-screen font-sans login bg-cover'>
+    <div className='h-screen font-sans bg-cover login'>
       <Head>
         <title>Prijava</title>
       </Head>
-      <div className='container mx-auto h-full flex flex-1 justify-center items-center'>
+      <div className='container flex items-center justify-center flex-1 h-full mx-auto'>
         <div className='w-full max-w-lg'>
           <div className='leading-loose'>
             <form
               onSubmit={handleSubmit}
-              className='max-w-sm m-4 p-10 bg-white bg-opacity-25 rounded shadow-xl'
+              className='max-w-sm p-10 m-4 bg-white bg-opacity-25 rounded shadow-xl'
             >
-              <p className='text-white font-medium text-center text-lg'>
+              <p className='text-lg font-medium text-center text-white'>
                 PRIJAVA
               </p>
+
               <div className='mt-2'>
                 <label className='block text-sm text-white' htmlFor='email'>
                   E-mail
@@ -73,7 +76,7 @@ const Prijava = () => {
                 />
               </div>
               <div className='mt-2'>
-                <label className='block  text-sm text-white'>Šifra</label>
+                <label className='block text-sm text-white'>Šifra</label>
                 <input
                   className='w-full px-5 py-1 text-gray-700 bg-gray-300 rounded focus:outline-none focus:bg-white'
                   type='password'
@@ -85,20 +88,21 @@ const Prijava = () => {
                 />
               </div>
 
-              <div className='mt-4 items-center flex justify-between'>
+              <div className='flex items-center justify-between mt-4'>
                 <button
-                  className='disabled:loading btn disabled:bg-gray-200 px-4 py-1 text-white font-light tracking-wider bg-gray-900 hover:bg-gray-800 rounded'
+                  className='px-4 py-1 font-light tracking-wider text-white bg-gray-900 rounded disabled:loading btn disabled:bg-gray-200 hover:bg-gray-800'
                   type='submit'
                   disabled={loading}
                 >
                   Prijava
                 </button>
                 <Link href='/auth/registracija'>
-                  <a className='inline-block right-0 align-baseline font-bold text-sm text-500 text-white hover:text-red-400'>
+                  <a className='right-0 inline-block text-sm font-bold text-white align-baseline text-500 hover:text-red-400'>
                     Registrujte se ?
                   </a>
                 </Link>
               </div>
+              {greska && <span className='text-red-400'>{greska}</span>}
             </form>
           </div>
         </div>
