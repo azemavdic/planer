@@ -15,7 +15,9 @@ const SidebarMeni = ({ meni }) => {
 
   const { posaoNezavrsen } = useGetAllPosaoQuery(undefined, {
     selectFromResult: ({ data }) => ({
-      posaoNezavrsen: data?.posao.filter((posao) => posao?.zavrsen === false),
+      posaoNezavrsen: data?.user?.posao.filter(
+        (posao) => posao?.zavrsen === false
+      ),
     }),
   })
 

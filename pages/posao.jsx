@@ -7,8 +7,12 @@ import { useGetAllPosaoQuery } from '../redux/api/posaoApi'
 import DodajButton from '../components/layout/DodajButton'
 import Modal from '../components/layout/Modal'
 import Layout from '../components/layout/Layout'
+import { getSession } from 'next-auth/react'
+import dbConnect from '../lib/mongodb'
+import User from '../models/korisnici/User'
 const { motion } = require('framer-motion')
-const Posao = () => {
+
+const Posao = ({ user }) => {
   const [posaoState, setPosaoState] = useState(null)
   const [filterActive, setfilterActive] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
@@ -17,17 +21,19 @@ const Posao = () => {
   const { data, isError, isLoading } = useGetAllPosaoQuery()
 
   useEffect(() => {
-    setPosaoState(data?.posao)
+    setPosaoState(data?.user?.posao)
   }, [data])
 
   const { posaoZavrsen } = useGetAllPosaoQuery(undefined, {
     selectFromResult: ({ data }) => ({
-      posaoZavrsen: data?.posao.filter((posao) => posao?.zavrsen),
+      posaoZavrsen: data?.user?.posao.filter((posao) => posao?.zavrsen),
     }),
   })
   const { posaoNezavrsen } = useGetAllPosaoQuery(undefined, {
     selectFromResult: ({ data }) => ({
-      posaoNezavrsen: data?.posao.filter((posao) => posao?.zavrsen === false),
+      posaoNezavrsen: data?.user?.posao.filter(
+        (posao) => posao?.zavrsen === false
+      ),
     }),
   })
 
@@ -45,7 +51,7 @@ const Posao = () => {
   }
 
   const ocistiFilter = () => {
-    setPosaoState(data?.posao)
+    setPosaoState(data?.user?.posao)
     setfilterActive(false)
   }
 
@@ -74,7 +80,7 @@ const Posao = () => {
         <div className='flex items-center justify-center gap-4 mt-5'>
           <div className='w-full lg:w-9/12'>
             <h3 className='text-xl font-bold'>Pregled aktivnosti</h3>
-            {data?.posao.length === 0 ? (
+            {data?.user?.posao.length === 0 ? (
               <div className='flex items-center justify-center h-[25rem]'>
                 <p>Nema aktivnosti za prikazati.</p>
               </div>
@@ -119,12 +125,26 @@ const Posao = () => {
               setIsEditing={setIsEditing}
               editedItem={editedItem}
               setEditedItem={setEditedItem}
+              user={user}
             />
           </motion.div>
         </Modal>
       </div>
     </Layout>
   )
+}
+
+export async function getServerSideProps(ctx) {
+  const session = await getSession(ctx)
+  const email = session?.user?.email
+
+  await dbConnect()
+  const userData = await User.findOne({ email: email })
+  const user = JSON.parse(JSON.stringify(userData))
+
+  return {
+    props: { user },
+  }
 }
 
 export default Posao

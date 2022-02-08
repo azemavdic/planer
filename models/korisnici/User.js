@@ -22,5 +22,10 @@ UserSchema.virtual('mama', {
   localField: '_id',
   foreignField: 'user',
 })
+UserSchema.virtual('posao', {
+  ref: 'Posao',
+  localField: '_id',
+  foreignField: 'user',
+})
 
 export default mongoose.models.User || mongoose.model('User', UserSchema)

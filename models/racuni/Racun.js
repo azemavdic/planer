@@ -2,6 +2,7 @@ import mongoose from 'mongoose'
 
 const RacunSchema = new mongoose.Schema(
   {
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     naziv: {
       type: String,
       required: [true, 'Molimo upišite naziv troska'],

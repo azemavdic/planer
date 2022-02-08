@@ -34,7 +34,7 @@ const AktivnostiLista = ({ data, id, referenca, setEditedItem }) => {
 
   const { posaoToggle } = useGetAllPosaoQuery(undefined, {
     selectFromResult: ({ data }) => ({
-      posaoToggle: data?.posao.find((posao) => posao._id === id),
+      posaoToggle: data?.user?.posao.find((posao) => posao._id === id),
     }),
   })
   const { mamaToggle } = useGetAllMamaAktivnostiQuery(undefined, {

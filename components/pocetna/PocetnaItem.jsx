@@ -6,7 +6,9 @@ import Loading from '../layout/Loading'
 const PocetnaItem = ({ naziv, path }) => {
   const { posaoNezavrsen } = useGetAllPosaoQuery(undefined, {
     selectFromResult: ({ data }) => ({
-      posaoNezavrsen: data?.posao.filter((posao) => posao?.zavrsen === false),
+      posaoNezavrsen: data?.user?.posao.filter(
+        (posao) => posao?.zavrsen === false
+      ),
     }),
   })
   const { mamaNezavrsen, mamaLoading } = useGetAllMamaAktivnostiQuery(
