@@ -13,45 +13,49 @@ const Card = ({ racun, refs }) => {
   const { strujaZadnji } = useGetStrujaQuery(undefined, {
     selectFromResult: ({ data }) => ({
       strujaZadnji:
-        data?.struja.length > 0
-          ? data?.struja[data?.struja.length - 1].mjesec
+        data?.user?.struja.length > 0
+          ? data?.user?.struja[data?.user?.struja.length - 1].mjesec
           : '',
     }),
   })
   const { vodaZadnji } = useGetVodaQuery(undefined, {
     selectFromResult: ({ data }) => ({
       vodaZadnji:
-        data?.voda.length > 0 ? data?.voda[data?.voda.length - 1].mjesec : '',
+        data?.user?.voda.length > 0
+          ? data?.user?.voda[data?.user?.voda.length - 1].mjesec
+          : '',
     }),
   })
   const { smeceZadnji } = useGetSmeceQuery(undefined, {
     selectFromResult: ({ data }) => ({
       smeceZadnji:
-        data?.smece.length > 0
-          ? data?.smece[data?.smece.length - 1].mjesec
+        data?.user?.smece.length > 0
+          ? data?.user?.smece[data?.user?.smece.length - 1].mjesec
           : '',
     }),
   })
   const { mobitelZadnji } = useGetMobitelQuery(undefined, {
     selectFromResult: ({ data }) => ({
       mobitelZadnji:
-        data?.mobitel.length > 0
-          ? data?.mobitel[data?.mobitel.length - 1].mjesec
+        data?.user?.mobitel.length > 0
+          ? data?.user?.mobitel[data?.user?.mobitel.length - 1].mjesec
           : '',
     }),
   })
   const { kablovskaZadnji } = useGetKablovskaQuery(undefined, {
     selectFromResult: ({ data }) => ({
       kablovskaZadnji:
-        data?.kablovska.length > 0
-          ? data?.kablovska[data?.kablovska.length - 1].mjesec
+        data?.user?.kablovska.length > 0
+          ? data?.user?.kablovska[data?.user?.kablovska.length - 1].mjesec
           : '',
     }),
   })
   const { iptvZadnji } = useGetIptvQuery(undefined, {
     selectFromResult: ({ data }) => ({
       iptvZadnji:
-        data?.iptv.length > 0 ? data?.iptv[data?.iptv.length - 1].mjesec : '',
+        data?.user?.iptv.length > 0
+          ? data?.user?.iptv[data?.user?.iptv.length - 1].mjesec
+          : '',
     }),
   })
 

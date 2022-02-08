@@ -1,14 +1,20 @@
 import dbConnect from '../../../../lib/mongodb'
 import Voda from '../../../../models/racuni/Voda'
+import User from '../../../../models/korisnici/User'
+import { getSession } from 'next-auth/react'
 
 export default async function handler(req, res) {
   await dbConnect()
+  const session = await getSession({ req })
+  const email = session?.user?.email
 
   switch (req.method) {
     case 'GET':
       try {
-        const voda = await Voda.find({})
-        res.status(201).json({ uspjesno: true, voda })
+        const user = await User.findOne({ email: email })
+          .populate({ path: 'voda', options: { sort: { createdAt: 'desc' } } })
+          .exec()
+        res.status(200).json({ uspjesno: true, user })
       } catch (error) {
         res.status(400).json({ uspjesno: false })
       }

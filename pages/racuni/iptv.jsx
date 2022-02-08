@@ -47,7 +47,7 @@ const Iptv = () => {
   const handleEditClick = (id) => {
     dispatch(showModal(true))
     dispatch(isEditing(true))
-    setEditedItem(data?.iptv.find((racun) => racun._id === id))
+    setEditedItem(data?.user?.iptv.find((racun) => racun._id === id))
   }
 
   let rb = 1
@@ -73,7 +73,7 @@ const Iptv = () => {
                 </td>
               </tr>
             )}
-            {data?.iptv.map((racun) => (
+            {data?.user?.iptv.map((racun) => (
               <tr key={racun?._id} className='border-b-[1px]'>
                 <td className='p-2'>{rb++}</td>
                 <td>{racun?.mjesec}</td>

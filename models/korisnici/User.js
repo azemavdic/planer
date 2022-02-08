@@ -27,5 +27,35 @@ UserSchema.virtual('posao', {
   localField: '_id',
   foreignField: 'user',
 })
+UserSchema.virtual('iptv', {
+  ref: 'Iptv',
+  localField: '_id',
+  foreignField: 'user',
+})
+UserSchema.virtual('kablovska', {
+  ref: 'Kablovska',
+  localField: '_id',
+  foreignField: 'user',
+})
+UserSchema.virtual('mobitel', {
+  ref: 'Mobitel',
+  localField: '_id',
+  foreignField: 'user',
+})
+UserSchema.virtual('smece', {
+  ref: 'Smece',
+  localField: '_id',
+  foreignField: 'user',
+})
+UserSchema.virtual('struja', {
+  ref: 'Struja',
+  localField: '_id',
+  foreignField: 'user',
+})
+UserSchema.virtual('voda', {
+  ref: 'Voda',
+  localField: '_id',
+  foreignField: 'user',
+})
 
 export default mongoose.models.User || mongoose.model('User', UserSchema)
