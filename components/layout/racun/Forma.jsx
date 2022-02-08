@@ -30,10 +30,11 @@ import {
 import { isEditing } from '../../../redux/editingItemSlice'
 import { showModal } from '../../../redux/modalSlice'
 
-const Forma = ({ editedItem, setEditedItem }) => {
+const Forma = ({ editedItem, setEditedItem, user }) => {
   const [formData, setFormData] = useState({
     iznos: '',
     mjesec: '',
+    user,
   })
   const [greska, setGreska] = useState(false)
 
@@ -97,7 +98,7 @@ const Forma = ({ editedItem, setEditedItem }) => {
     }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (formData.iznos === null || formData.mjesec === '') {
       setGreska('Popunite sva polja')
@@ -115,22 +116,22 @@ const Forma = ({ editedItem, setEditedItem }) => {
     }
     switch (router.pathname) {
       case '/racuni/struja':
-        dodajStruja(formData)
+        await dodajStruja(formData)
         break
       case '/racuni/voda':
-        dodajVoda(formData)
+        await dodajVoda(formData)
         break
       case '/racuni/smece':
-        dodajSmece(formData)
+        await dodajSmece(formData)
         break
       case '/racuni/mobitel':
-        dodajMobitel(formData)
+        await dodajMobitel(formData)
         break
       case '/racuni/kablovska':
-        dodajKablovska(formData)
+        await dodajKablovska(formData)
         break
       case '/racuni/iptv':
-        dodajIptv(formData)
+        await dodajIptv(formData)
         break
       default:
         break

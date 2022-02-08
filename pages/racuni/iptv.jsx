@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router'
 import DodajButton from '../../components/layout/DodajButton'
 import Modal from '../../components/layout/Modal'
 import Forma from '../../components/layout/racun/Forma'
@@ -15,11 +14,13 @@ import { useState } from 'react'
 import { isEditing } from '../../redux/editingItemSlice'
 import Loading from '../../components/layout/Loading'
 import Layout from '../../components/layout/Layout'
+import { getSession } from 'next-auth/react'
+import dbConnect from '../../lib/mongodb'
+import User from '../../models/korisnici/User'
 
-const Iptv = () => {
+const Iptv = ({ user }) => {
   const [editedItem, setEditedItem] = useState({})
 
-  const router = useRouter()
   const dispatch = useDispatch()
 
   const { data, isLoading } = useGetIptvQuery()
@@ -99,10 +100,27 @@ const Iptv = () => {
       </div>
       <DodajButton />
       <Modal>
-        <Forma editedItem={editedItem} setEditedItem={setEditedItem} />
+        <Forma
+          editedItem={editedItem}
+          setEditedItem={setEditedItem}
+          user={user}
+        />
       </Modal>
     </Layout>
   )
+}
+
+export async function getServerSideProps(ctx) {
+  const session = await getSession(ctx)
+  const email = session?.user?.email
+
+  await dbConnect()
+  const userData = await User.findOne({ email: email })
+  const user = JSON.parse(JSON.stringify(userData))
+
+  return {
+    props: { user },
+  }
 }
 
 export default Iptv

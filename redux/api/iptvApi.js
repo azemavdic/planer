@@ -22,7 +22,7 @@ const iptvApi = emptySplitApi.injectEndpoints({
     }),
     izbrisiIptv: build.mutation({
       query: ({ id }) => ({
-        url: `racun/Iptv/${id}`,
+        url: `racun/iptv/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: [{ type: 'Iptv', id: 'LIST' }],

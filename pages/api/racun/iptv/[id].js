@@ -12,7 +12,9 @@ export default async function handler(req, res) {
         if (!deletedIptv) {
           res.status(400).json({ uspjesno: false })
         }
-        res.status(200).json({ uspjesno: true })
+        res
+          .status(200)
+          .json({ uspjesno: true, poruka: `Uspješno obrisan ${id} račun` })
       } catch (error) {
         res.status(400).json({ uspjesno: false })
       }

@@ -15,8 +15,11 @@ import { useState } from 'react'
 import { isEditing } from '../../redux/editingItemSlice'
 import Loading from '../../components/layout/Loading'
 import Layout from '../../components/layout/Layout'
+import { getSession } from 'next-auth/react'
+import dbConnect from '../../lib/mongodb'
+import User from '../../models/korisnici/User'
 
-const Struja = () => {
+const Struja = ({ user }) => {
   const [editedItem, setEditedItem] = useState({})
 
   const router = useRouter()
@@ -47,7 +50,7 @@ const Struja = () => {
   const handleEditClick = (id) => {
     dispatch(showModal(true))
     dispatch(isEditing(true))
-    setEditedItem(data?.struja.find((racun) => racun._id === id))
+    setEditedItem(data?.user?.struja.find((racun) => racun._id === id))
   }
 
   let rb = 1
@@ -73,7 +76,7 @@ const Struja = () => {
                 </td>
               </tr>
             )}
-            {data?.struja.map((racun) => (
+            {data?.user?.struja.map((racun) => (
               <tr key={racun?._id} className='border-b-[1px]'>
                 <td className='p-2'>{rb++}</td>
                 <td>{racun?.mjesec}</td>
@@ -99,10 +102,27 @@ const Struja = () => {
       </div>
       <DodajButton />
       <Modal>
-        <Forma editedItem={editedItem} setEditedItem={setEditedItem} />
+        <Forma
+          editedItem={editedItem}
+          setEditedItem={setEditedItem}
+          user={user}
+        />
       </Modal>
     </Layout>
   )
+}
+
+export async function getServerSideProps(ctx) {
+  const session = await getSession(ctx)
+  const email = session?.user?.email
+
+  await dbConnect()
+  const userData = await User.findOne({ email: email })
+  const user = JSON.parse(JSON.stringify(userData))
+
+  return {
+    props: { user },
+  }
 }
 
 export default Struja
