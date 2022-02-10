@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useGetAllMamaAktivnostiQuery } from '../../redux/api/mamaApi'
+import { useGetAllKucaAktivnostiQuery } from '../../redux/api/kucaApi'
 import { useGetAllPosaoQuery } from '../../redux/api/posaoApi'
 
 const MobileMenuItem = ({ Ikona, path }) => {
@@ -23,6 +24,11 @@ const MobileMenuItem = ({ Ikona, path }) => {
       mamaNezavrsen: data?.user?.mama.filter((mama) => mama?.zavrsen === false),
     }),
   })
+  const { kucaNezavrsen } = useGetAllKucaAktivnostiQuery(undefined, {
+    selectFromResult: ({ data }) => ({
+      kucaNezavrsen: data?.user?.kuca.filter((kuca) => kuca?.zavrsen === false),
+    }),
+  })
 
   return (
     <div className={className}>
@@ -37,6 +43,11 @@ const MobileMenuItem = ({ Ikona, path }) => {
           {path === '/mama' && (
             <div className='indicator-item badge badge-warning'>
               {mamaNezavrsen?.length}
+            </div>
+          )}
+          {path === '/kuca' && (
+            <div className='indicator-item badge badge-warning'>
+              {kucaNezavrsen?.length}
             </div>
           )}
         </a>

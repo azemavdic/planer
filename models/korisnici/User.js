@@ -17,6 +17,11 @@ const UserSchema = Schema(
   }
 )
 
+UserSchema.virtual('kuca', {
+  ref: 'Kuca',
+  localField: '_id',
+  foreignField: 'user',
+})
 UserSchema.virtual('mama', {
   ref: 'Mama',
   localField: '_id',

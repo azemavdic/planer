@@ -7,6 +7,7 @@ export const emptySplitApi = createApi({
 
   tagTypes: [
     'Posao',
+    'Kuca',
     'Mama',
     'Struja',
     'Voda',

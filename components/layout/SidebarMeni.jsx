@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useGetAllMamaAktivnostiQuery } from '../../redux/api/mamaApi'
 import { useGetAllPosaoQuery } from '../../redux/api/posaoApi'
+import { useGetAllKucaAktivnostiQuery } from '../../redux/api/kucaApi'
 
 const SidebarMeni = ({ meni }) => {
   const { Ikona, naziv, path } = meni
@@ -20,6 +21,11 @@ const SidebarMeni = ({ meni }) => {
       ),
     }),
   })
+  const { kucaNezavrsen } = useGetAllKucaAktivnostiQuery(undefined, {
+    selectFromResult: ({ data }) => ({
+      kucaNezavrsen: data?.user?.kuca.filter((kuca) => kuca?.zavrsen === false),
+    }),
+  })
 
   const { mamaNezavrsen } = useGetAllMamaAktivnostiQuery(undefined, {
     selectFromResult: ({ data }) => ({
@@ -34,6 +40,11 @@ const SidebarMeni = ({ meni }) => {
           <Ikona />
           <p className='cursor-pointer indicator'>
             {naziv}
+            {path === '/kuca' && (
+              <span className='indicator-item badge badge-warning'>
+                {kucaNezavrsen?.length}
+              </span>
+            )}
             {path === '/posao' && (
               <span className='indicator-item badge badge-warning'>
                 {posaoNezavrsen?.length}

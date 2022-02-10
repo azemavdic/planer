@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { useGetAllMamaAktivnostiQuery } from '../../redux/api/mamaApi'
+import { useGetAllKucaAktivnostiQuery } from '../../redux/api/kucaApi'
 import { useGetAllPosaoQuery } from '../../redux/api/posaoApi'
 import Loading from '../layout/Loading'
 
@@ -11,6 +12,7 @@ const PocetnaItem = ({ naziv, path }) => {
       ),
     }),
   })
+
   const { mamaNezavrsen, mamaLoading } = useGetAllMamaAktivnostiQuery(
     undefined,
     {
@@ -22,6 +24,12 @@ const PocetnaItem = ({ naziv, path }) => {
       }),
     }
   )
+
+  const { kucaNezavrsen } = useGetAllKucaAktivnostiQuery(undefined, {
+    selectFromResult: ({ data }) => ({
+      kucaNezavrsen: data?.user?.kuca.filter((kuca) => kuca?.zavrsen === false),
+    }),
+  })
   let nezavrseni = 0
   switch (naziv) {
     case 'posao':
@@ -29,6 +37,9 @@ const PocetnaItem = ({ naziv, path }) => {
       break
     case 'mama':
       nezavrseni = mamaNezavrsen?.length
+      break
+    case 'kuća':
+      nezavrseni = kucaNezavrsen?.length
       break
     default:
       break

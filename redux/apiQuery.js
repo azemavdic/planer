@@ -8,6 +8,7 @@ export const api = createApi({
   tagTypes: [
     'Posao',
     'Mama',
+    'Kuca',
     'Struja',
     'Voda',
     'Smece',

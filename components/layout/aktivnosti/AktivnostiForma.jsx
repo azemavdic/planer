@@ -10,6 +10,10 @@ import {
   useAddMamaAktivnostMutation,
   useUpdateMamaAktivnostMutation,
 } from '../../../redux/api/mamaApi'
+import {
+  useAddKucaAktivnostMutation,
+  useUpdateKucaAktivnostMutation,
+} from '../../../redux/api/kucaApi'
 import { isEditing } from '../../../redux/editingItemSlice'
 import { showModal } from '../../../redux/modalSlice'
 
@@ -27,6 +31,8 @@ const AktivnostiForma = ({ referenca, editedItem, setEditedItem, user }) => {
   const dispatch = useDispatch()
 
   const [dodajPosao, { isLoading: isLoadingPosao }] = useAddPosaoMutation()
+  const [dodajKuca, { isLoading: isLoadingKuca }] =
+    useAddKucaAktivnostMutation()
   const [dodajMamaAktivnost, { isLoading: isLoadingMama }] =
     useAddMamaAktivnostMutation()
 
@@ -57,6 +63,10 @@ const AktivnostiForma = ({ referenca, editedItem, setEditedItem, user }) => {
     useUpdateMamaAktivnostMutation({
       fixedCacheKey: 'shared-update-post',
     })
+  const [updateKucaAkt, { isLoading: isLoadingKucaEdit }] =
+    useUpdateKucaAktivnostMutation({
+      fixedCacheKey: 'shared-update-post',
+    })
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -69,8 +79,10 @@ const AktivnostiForma = ({ referenca, editedItem, setEditedItem, user }) => {
     }
     if (referenca === 'mama') {
       await dodajMamaAktivnost(formData).unwrap()
-    } else {
+    } else if (referenca === 'posao') {
       await dodajPosao(formData).unwrap()
+    } else {
+      await dodajKuca(formData)
     }
     setFormData({ naziv: '', opis: '', zavrsen: false })
     setInputFocus()
@@ -92,8 +104,15 @@ const AktivnostiForma = ({ referenca, editedItem, setEditedItem, user }) => {
         opis: editedItem?.opis,
         zavrsen: editedItem?.zavrsen,
       }).unwrap()
-    } else {
+    } else if (referenca === 'posao') {
       await updatePosao({
+        id: editedItem?._id,
+        naziv: editedItem?.naziv,
+        opis: editedItem?.opis,
+        zavrsen: editedItem?.zavrsen,
+      }).unwrap()
+    } else {
+      await updateKucaAkt({
         id: editedItem?._id,
         naziv: editedItem?.naziv,
         opis: editedItem?.opis,
@@ -163,7 +182,11 @@ const AktivnostiForma = ({ referenca, editedItem, setEditedItem, user }) => {
         {isEditingSelector ? (
           <button
             disabled={
-              referenca === 'mama' ? isLoadingMamaEdit : isLoadingPosaoEdit
+              referenca === 'mama'
+                ? isLoadingMamaEdit
+                : referenca === 'posao'
+                ? isLoadingPosaoEdit
+                : isLoadingKucaEdit
             }
             className='btn btn-wide disabled:bg-gray-200 disabled:loading'
           >
@@ -171,7 +194,13 @@ const AktivnostiForma = ({ referenca, editedItem, setEditedItem, user }) => {
           </button>
         ) : (
           <button
-            disabled={referenca === 'mama' ? isLoadingMama : isLoadingPosao}
+            disabled={
+              referenca === 'mama'
+                ? isLoadingMama
+                : referenca === 'posao'
+                ? isLoadingPosao
+                : isLoadingKuca
+            }
             className='btn btn-wide disabled:bg-gray-200 disabled:loading'
           >
             Potvrdi

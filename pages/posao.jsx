@@ -126,6 +126,7 @@ const Posao = ({ user }) => {
               editedItem={editedItem}
               setEditedItem={setEditedItem}
               user={user}
+              referenca='posao'
             />
           </motion.div>
         </Modal>

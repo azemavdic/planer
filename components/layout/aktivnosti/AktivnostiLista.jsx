@@ -9,6 +9,11 @@ import {
   useIzbrisiMamaAktivnostMutation,
   useToggleZavrsenMamaMutation,
 } from '../../../redux/api/mamaApi'
+import {
+  useGetAllKucaAktivnostiQuery,
+  useIzbrisiKucaAktivnostMutation,
+  useToggleZavrsenKucaMutation,
+} from '../../../redux/api/kucaApi'
 import dayjs from 'dayjs'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -42,6 +47,11 @@ const AktivnostiLista = ({ data, id, referenca, setEditedItem }) => {
       mamaToggle: data?.user?.mama.find((mama) => mama._id === id),
     }),
   })
+  const { kucaToggle } = useGetAllKucaAktivnostiQuery(undefined, {
+    selectFromResult: ({ data }) => ({
+      kucaToggle: data?.user?.kuca.find((kuca) => kuca._id === id),
+    }),
+  })
   const [izbrisiPosao] = useIzbrisiPosaoMutation()
   const [izmijeniZavrsen, { isLoading: isLoadingPosaoToggle }] =
     useToggleZavrsenMutation({
@@ -51,12 +61,18 @@ const AktivnostiLista = ({ data, id, referenca, setEditedItem }) => {
   const [izmijeniZavrsenMama] = useToggleZavrsenMamaMutation({
     fixedCacheKey: 'shared-update-post',
   })
+  const [izbrisiKucaAktivnost] = useIzbrisiKucaAktivnostMutation()
+  const [izmijeniZavrsenKuca] = useToggleZavrsenKucaMutation({
+    fixedCacheKey: 'shared-update-post',
+  })
 
   const toggleZavrsen = async () => {
     if (referenca === 'mama') {
       await izmijeniZavrsenMama({ id, zavrsen: !mamaToggle?.zavrsen })
-    } else {
+    } else if (referenca === 'posao') {
       await izmijeniZavrsen({ id, zavrsen: !posaoToggle?.zavrsen })
+    } else {
+      await izmijeniZavrsenKuca({ id, zavrsen: !kucaToggle?.zavrsen })
     }
   }
 
@@ -75,8 +91,10 @@ const AktivnostiLista = ({ data, id, referenca, setEditedItem }) => {
       Swal.fire('Aktivnost izbrisana!', '', 'success')
       if (referenca === 'mama') {
         izbrisiMamaAktivnost({ id }).unwrap()
-      } else {
+      } else if (referenca === 'posao') {
         izbrisiPosao({ id }).unwrap()
+      } else {
+        izbrisiKucaAktivnost({ id }).unwrap()
       }
       refetch()
     } else {
