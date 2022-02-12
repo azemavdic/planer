@@ -17,8 +17,8 @@ const SearchComponent = () => {
       mamaAkt: data?.user?.mama.filter((akt) => {
         if (text) {
           if (
-            akt?.naziv.toLowerCase().includes(text) ||
-            akt?.opis.toLowerCase().includes(text)
+            akt?.naziv.toLowerCase().includes(text.toLowerCase()) ||
+            akt?.opis.toLowerCase().includes(text.toLowerCase())
           ) {
             return akt
           }
@@ -32,8 +32,8 @@ const SearchComponent = () => {
       posaoAkt: data?.user?.posao.filter((akt) => {
         if (text) {
           if (
-            akt?.naziv.toLowerCase().includes(text) ||
-            akt?.opis.toLowerCase().includes(text)
+            akt?.naziv.toLowerCase().includes(text.toLowerCase()) ||
+            akt?.opis.toLowerCase().includes(text.toLowerCase())
           ) {
             return akt
           }
@@ -47,8 +47,8 @@ const SearchComponent = () => {
       kucaAkt: data?.user?.kuca.filter((akt) => {
         if (text) {
           if (
-            akt?.naziv.toLowerCase().includes(text) ||
-            akt?.opis.toLowerCase().includes(text)
+            akt?.naziv.toLowerCase().includes(text.toLowerCase()) ||
+            akt?.opis.toLowerCase().includes(text.toLowerCase())
           ) {
             return akt
           }
