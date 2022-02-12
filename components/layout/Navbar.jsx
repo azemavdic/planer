@@ -6,6 +6,7 @@ import { MdWork } from 'react-icons/md'
 import Link from 'next/link'
 import Image from 'next/image'
 import { signOut } from 'next-auth/react'
+import SearchComponent from './SearchComponent'
 
 const Navbar = () => {
   const router = useRouter()
@@ -31,15 +32,7 @@ const Navbar = () => {
           )}
         </span>
       </div>
-      <div className='justify-center flex-grow w-full'>
-        <div className='form-control lg:w-4/5'>
-          <input
-            type='text'
-            placeholder='Pretraga'
-            className='input input-ghost'
-          />
-        </div>
-      </div>
+      <SearchComponent />
       <button className='btn btn-ghost btn-sm' onClick={handleLogout}>
         Odjava
       </button>

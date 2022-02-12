@@ -10,6 +10,7 @@ import Layout from '../components/layout/Layout'
 import { getSession } from 'next-auth/react'
 import dbConnect from '../lib/mongodb'
 import User from '../models/korisnici/User'
+import { useSelector } from 'react-redux'
 const { motion } = require('framer-motion')
 
 const Posao = ({ user }) => {
@@ -18,11 +19,18 @@ const Posao = ({ user }) => {
   const [isEditing, setIsEditing] = useState(false)
   const [editedItem, setEditedItem] = useState({})
 
-  const { data, isError, isLoading } = useGetAllPosaoQuery()
+  const { data, isLoading } = useGetAllPosaoQuery()
+
+  const posaoData = useSelector((state) => state.pretraga.pretraga)
+  const text = useSelector((state) => state.pretraga.text)
 
   useEffect(() => {
-    setPosaoState(data?.user?.posao)
-  }, [data])
+    if (!text || posaoData.length === 0) {
+      setPosaoState(data?.user?.posao)
+    } else {
+      setPosaoState(posaoData)
+    }
+  }, [data, posaoData, text])
 
   const { posaoZavrsen } = useGetAllPosaoQuery(undefined, {
     selectFromResult: ({ data }) => ({

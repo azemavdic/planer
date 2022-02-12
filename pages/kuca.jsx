@@ -10,17 +10,29 @@ import Layout from '../components/layout/Layout'
 import dbConnect from '../lib/mongodb'
 import { getSession } from 'next-auth/react'
 import User from '../models/korisnici/User'
+import { useSelector } from 'react-redux'
 const { motion } = require('framer-motion')
 
 const Kuca = ({ user }) => {
-  const [kucaState, setkucaState] = useState(null)
+  const [kucaState, setKucaState] = useState(null)
   const [filterActive, setfilterActive] = useState(false)
   const [editedItem, setEditedItem] = useState({})
 
-  const { data, isError, isLoading, refetch } = useGetAllKucaAktivnostiQuery()
+  const { data, isLoading } = useGetAllKucaAktivnostiQuery()
+
+  const kucaData = useSelector((state) => state.pretraga.pretraga)
+  const text = useSelector((state) => state.pretraga.text)
 
   useEffect(() => {
-    setkucaState(data?.user?.kuca)
+    if (!text || kucaData.length === 0) {
+      setKucaState(data?.user?.kuca)
+    } else {
+      setKucaState(kucaData)
+    }
+  }, [data, kucaData, text])
+
+  useEffect(() => {
+    setKucaState(data?.user?.kuca)
   }, [data])
 
   const { kucaAktZavrsena } = useGetAllKucaAktivnostiQuery(undefined, {
@@ -41,16 +53,16 @@ const Kuca = ({ user }) => {
   const styleBadgeNezavrsen = `${styleBadge} bg-red-600 shadow-red-600/40`
 
   const filterNezavrseni = () => {
-    setkucaState(kucaAktNezavrsena)
+    setKucaState(kucaAktNezavrsena)
     setfilterActive(true)
   }
   const filterZavrseni = () => {
-    setkucaState(kucaAktZavrsena)
+    setKucaState(kucaAktZavrsena)
     setfilterActive(true)
   }
 
   const ocistiFilter = () => {
-    setkucaState(data?.user?.kuca)
+    setKucaState(data?.user?.kuca)
     setfilterActive(false)
   }
 

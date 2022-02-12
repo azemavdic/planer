@@ -10,6 +10,7 @@ import Layout from '../components/layout/Layout'
 import dbConnect from '../lib/mongodb'
 import { getSession } from 'next-auth/react'
 import User from '../models/korisnici/User'
+import { useSelector } from 'react-redux'
 const { motion } = require('framer-motion')
 
 const Mama = ({ user }) => {
@@ -17,11 +18,18 @@ const Mama = ({ user }) => {
   const [filterActive, setfilterActive] = useState(false)
   const [editedItem, setEditedItem] = useState({})
 
-  const { data, isError, isLoading, refetch } = useGetAllMamaAktivnostiQuery()
+  const { data, isLoading } = useGetAllMamaAktivnostiQuery()
+
+  const mamaData = useSelector((state) => state.pretraga.pretraga)
+  const text = useSelector((state) => state.pretraga.text)
 
   useEffect(() => {
-    setmamaState(data?.user?.mama)
-  }, [data])
+    if (!text || mamaData.length === 0) {
+      setmamaState(data?.user?.mama)
+    } else {
+      setmamaState(mamaData)
+    }
+  }, [data, mamaData, text])
 
   const { mamaAktZavrsena } = useGetAllMamaAktivnostiQuery(undefined, {
     selectFromResult: ({ data }) => ({
